@@ -1040,6 +1040,7 @@ GameObject:
   - component: {fileID: -7832208631107678931}
   - component: {fileID: 2001761544436755375}
   - component: {fileID: 829737684587673667}
+  - component: {fileID: 1653688344574883018}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -1181,7 +1182,7 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   analogMovement: 0
-  cursorLocked: 1
+  cursorLocked: 0
   cursorInputForLook: 1
 --- !u!114 &4416926081852918493
 MonoBehaviour:
@@ -1355,6 +1356,19 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &1653688344574883018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926081852918481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f168d213e1460fd4f8cdd4293200586d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 7063608488246922134, guid: f011dc3536ee0dc4c911902d390d47cb, type: 3}
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0
