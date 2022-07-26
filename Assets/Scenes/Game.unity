@@ -998,6 +998,75 @@ ReflectionProbe:
   m_UseOcclusionCulling: 1
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}
+--- !u!1001 &1044793557114414918
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 65.453964
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -389.44995
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -84.538025
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640331739412210256, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982550418842024674, guid: bf54c6df6eb86a049906fdfdcb92160a,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicBolt
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bf54c6df6eb86a049906fdfdcb92160a, type: 3}
 --- !u!1 &2114283753834967212
 GameObject:
   m_ObjectHideFlags: 0
