@@ -3,12 +3,6 @@ using Photon.Pun;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
-    public void CreateRoom()
-    {
-
-        PhotonNetwork.CreateRoom("test");
-    }
-
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom("test");
@@ -21,6 +15,6 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void Start()
     {
-        PhotonNetwork.JoinRandomOrCreateRoom();
+        PhotonNetwork.JoinRandomOrCreateRoom(null, 2);
     }
 }
