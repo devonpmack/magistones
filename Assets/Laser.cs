@@ -5,6 +5,7 @@ public class Laser : MonoBehaviour
 {
 
     public float velocity;
+    public float maxDist;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, new Vector3(0, 0, 11)) > 5)
+        if (Vector3.Distance(transform.position, new Vector3(0, 0, 11)) > maxDist)
         {
             PhotonNetwork.Destroy(gameObject);
         }
