@@ -18,4 +18,9 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("Game");
     }
+
+    public void Start()
+    {
+        PhotonNetwork.JoinRandomOrCreateRoom();
+    }
 }
