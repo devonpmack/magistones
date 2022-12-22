@@ -14,7 +14,7 @@ public class Home : MonoBehaviour
 
   }
 
-  public static void OnClick()
+  public static  void OnClick()
   {
     UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
   }
