@@ -1,11 +1,10 @@
 using Cinemachine;
-using Photon.Pun;
 using UnityEngine;
 
 public class SpawnPlayers : MonoBehaviour
 {
     public GameObject prefab;
-    //public GameObject cameraFollow;
+    public GameObject cameraFollow;
 
     public CinemachineVirtualCamera cam;
 
@@ -16,9 +15,12 @@ public class SpawnPlayers : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject obj = PhotonNetwork.Instantiate(prefab.name, new Vector3(x, y, z), Quaternion.identity);
+        //GameObject obj = PhotonNetwork.Instantiate(prefab.name, new Vector3(x, y, z), Quaternion.identity);
 
-        cam.m_Follow = obj.GetComponent<Transform>();
-        cam.m_LookAt = obj.GetComponent<Transform>();
+        //cam.m_Follow = obj.GetComponent<Transform>();
+
+
+
+        //cam.m_LookAt = obj.GetComponent<Transform>();
     }
 }

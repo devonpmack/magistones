@@ -1,4 +1,3 @@
-using Photon.Pun;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
@@ -19,7 +18,7 @@ public class Laser : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, new Vector3(0, 0, 11)) > maxDist)
         {
-            PhotonNetwork.Destroy(gameObject);
+            //PhotonNetwork.Destroy(gameObject);
         }
     }
 }
