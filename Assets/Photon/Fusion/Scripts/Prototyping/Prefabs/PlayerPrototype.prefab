@@ -412,6 +412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  _prefabBall: {fileID: 5909841615300454634, guid: f011dc3536ee0dc4c911902d390d47cb,
+    type: 3}
   _MovementDirection: {x: 0, y: 0, z: 0}
   TransformLocal: 0
   Speed: 6
@@ -492,9 +494,9 @@ MonoBehaviour:
   TargetInterpolationDelay: 0.03
   gravity: -20
   jumpImpulse: 8
-  acceleration: 10
+  acceleration: 30
   braking: 10
-  maxSpeed: 2
+  maxSpeed: 5
   rotationSpeed: 15
   _IsGrounded: 0
   _Velocity: {x: 0, y: 0, z: 0}

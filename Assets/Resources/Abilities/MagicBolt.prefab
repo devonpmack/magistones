@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49f5d6633a6d934c9cb59b2fdf64bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laser: {fileID: 7063608488246922134, guid: f011dc3536ee0dc4c911902d390d47cb, type: 3}
+  laser: {fileID: 2819041608224040416, guid: f011dc3536ee0dc4c911902d390d47cb, type: 3}

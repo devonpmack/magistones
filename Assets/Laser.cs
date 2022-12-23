@@ -1,24 +1,22 @@
-using UnityEngine;
+using Fusion;
 
-public class Laser : MonoBehaviour
+public class Laser : NetworkBehaviour
 {
+  public float velocity;
+  public float lifeTime;
+  [Networked] private TickTimer life { get; set; }
 
-    public float velocity;
-    public float maxDist;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();
+  public void Init()
+  {
+    life = TickTimer.CreateFromSeconds(Runner, lifeTime);
+  }
 
-        rb.velocity = transform.forward * velocity;
-    }
+  public override void FixedUpdateNetwork()
+  {
+    if (life.Expired(Runner))
+      Runner.Despawn(Object);
+    else
+      transform.position += velocity * transform.forward * Runner.DeltaTime;
+  }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Vector3.Distance(transform.position, new Vector3(0, 0, 11)) > maxDist)
-        {
-            //PhotonNetwork.Destroy(gameObject);
-        }
-    }
 }
