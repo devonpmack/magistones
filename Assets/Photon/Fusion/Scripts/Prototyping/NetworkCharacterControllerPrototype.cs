@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using UnityEngine;
 
@@ -8,11 +7,11 @@ using UnityEngine;
 // ReSharper disable once CheckNamespace
 public class NetworkCharacterControllerPrototype : NetworkTransform {
   [Header("Character Controller Settings")]
-  public float gravity       = -20.0f;
-  public float jumpImpulse   = 8.0f;
-  public float acceleration  = 10.0f;
-  public float braking       = 10.0f;
-  public float maxSpeed      = 2.0f;
+  public float gravity = -20.0f;
+  public float jumpImpulse = 8.0f;
+  public float acceleration = 10.0f;
+  public float braking = 10.0f;
+  public float maxSpeed = 2.0f;
   public float rotationSpeed = 15.0f;
 
   [Networked]
@@ -75,7 +74,7 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
     if (IsGrounded || ignoreGrounded) {
       var newVel = Velocity;
       newVel.y += overrideImpulse ?? jumpImpulse;
-      Velocity =  newVel;
+      Velocity = newVel;
     }
   }
 
@@ -84,8 +83,8 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
   /// <param name="direction">Intended movement direction, subject to movement query, acceleration and max speed values.</param>
   /// </summary>
   public virtual void Move(Vector3 direction) {
-    var deltaTime    = Runner.DeltaTime;
-    var previousPos  = transform.position;
+    var deltaTime = Runner.DeltaTime;
+    var previousPos = transform.position;
     var moveVelocity = Velocity;
 
     direction = direction.normalized;
@@ -103,7 +102,7 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
     if (direction == default) {
       horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
     } else {
-      horizontalVel      = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
+      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
     }
 
@@ -112,7 +111,7 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
 
     Controller.Move(moveVelocity * deltaTime);
 
-    Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
+    Velocity = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
     IsGrounded = Controller.isGrounded;
   }
 }
