@@ -4,9 +4,13 @@ using UnityEngine;
 public class Laser : NetworkBehaviour {
   public float velocity;
   public float lifeTime;
+
+  private int source;
+
   [Networked] private TickTimer life { get; set; }
 
-  public void Init() {
+  public void Init(int sourceId) {
+    source = sourceId;
     life = TickTimer.CreateFromSeconds(Runner, lifeTime);
   }
 
@@ -20,10 +24,9 @@ public class Laser : NetworkBehaviour {
   // when it collides with a player push themm
   [System.Obsolete]
   private void OnTriggerEnter(Collider other) {
-
     Debug.Log("Collided with: " + other.gameObject.name);
 
-    if (other.gameObject.tag == "Player" && !other.gameObject.GetComponent<NetworkObject>().HasInputAuthority) {
+    if (other.gameObject.tag == "Player" && other.gameObject.GetInstanceID() != source) {
       other.gameObject.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (transform.forward * 10);
 
       Runner.Despawn(Object);

@@ -91,23 +91,18 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
     if (delay.ExpiredOrNotRunning(Runner) && input.IsDown(NetworkInputPrototype.BUTTON_FIRE)) {
       delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
 
-      Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-      Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-      float rayLength;
-
-      if (groundPlane.Raycast(cameraRay, out rayLength)) {
-        Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-        Debug.DrawLine(cameraRay.origin, pointToLook, Color.cyan);
-
-        transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-      }
+      _nt.transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
 
       Runner.Spawn(_prefabBall,
       transform.position, transform.rotation,
       Object.InputAuthority, (runner, o) => {
         // Initialize the Ball before synchronizing it
-        o.GetComponent<Laser>().Init();
+        o.GetComponent<Laser>().Init(gameObject.GetInstanceID());
       });
+    }
+
+    if (transform.position.y < -10) {
+      transform.position = new Vector3(3, 1, 15);
     }
 
   }

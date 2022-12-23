@@ -61,6 +61,18 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_FIRE, true);
     }
 
+    Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+    Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+    float rayLength;
+
+    if (groundPlane.Raycast(cameraRay, out rayLength)) {
+      Vector3 pointToLook = cameraRay.GetPoint(rayLength);
+      Debug.DrawLine(cameraRay.origin, pointToLook, Color.cyan);
+
+      frameworkInput.mouse_x = pointToLook.x;
+      frameworkInput.mouse_z = pointToLook.z;
+    }
+
     input.Set(frameworkInput);
   }
 
@@ -70,16 +82,16 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
   public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
   public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
   public void OnDisconnectedFromServer(NetworkRunner runner) { }
-  public void OnPlayerJoined(NetworkRunner          runner, PlayerRef            player)                                                           { }
-  public void OnPlayerLeft(NetworkRunner            runner, PlayerRef            player)                                                           { }
-  public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)                                                          { }
-  public void OnShutdown(NetworkRunner              runner, ShutdownReason       shutdownReason) { }
-  public void OnSessionListUpdated(NetworkRunner    runner, List<SessionInfo>    sessionList)    {  }
+  public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+  public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
+  public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+  public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
+  public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
   public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) {
   }
 
   public void OnSceneLoadDone(NetworkRunner runner) {
-    
+
   }
 
   public void OnSceneLoadStart(NetworkRunner runner) {
@@ -98,30 +110,32 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
 /// </summary>
 public struct NetworkInputPrototype : INetworkInput {
 
-  public const int BUTTON_USE      = 0;
-  public const int BUTTON_FIRE     = 1;
+  public const int BUTTON_USE = 0;
+  public const int BUTTON_FIRE = 1;
   public const int BUTTON_FIRE_ALT = 2;
 
-  public const int BUTTON_FORWARD  = 3;
+  public const int BUTTON_FORWARD = 3;
   public const int BUTTON_BACKWARD = 4;
-  public const int BUTTON_LEFT     = 5;
-  public const int BUTTON_RIGHT    = 6;
+  public const int BUTTON_LEFT = 5;
+  public const int BUTTON_RIGHT = 6;
 
-  public const int BUTTON_JUMP     = 7;
-  public const int BUTTON_CROUCH   = 8;
-  public const int BUTTON_WALK     = 9;
+  public const int BUTTON_JUMP = 7;
+  public const int BUTTON_CROUCH = 8;
+  public const int BUTTON_WALK = 9;
 
-  public const int BUTTON_ACTION1  = 10;
-  public const int BUTTON_ACTION2  = 11;
-  public const int BUTTON_ACTION3  = 12;
-  public const int BUTTON_ACTION4  = 14;
+  public const int BUTTON_ACTION1 = 10;
+  public const int BUTTON_ACTION2 = 11;
+  public const int BUTTON_ACTION3 = 12;
+  public const int BUTTON_ACTION4 = 14;
 
-  public const int BUTTON_RELOAD   = 15;
+  public const int BUTTON_RELOAD = 15;
 
   public NetworkButtons Buttons;
   public byte Weapon;
   public Angle Yaw;
   public Angle Pitch;
+  public float mouse_x;
+  public float mouse_z;
 
   public bool IsUp(int button) {
     return Buttons.IsSet(button) == false;
