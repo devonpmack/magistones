@@ -22,8 +22,9 @@ public class Wizard : NetworkBehaviour {
   // Start is called before the first frame update
   void Start() {
     if (GetComponent<NetworkCharacterControllerPrototype>().HasInputAuthority) {
-      AbilityDisplay display = GameObject.FindGameObjectWithTag("AbilityIcon").GetComponent<AbilityDisplay>();
-      display.ability = primary;
+      GameObject[] display = GameObject.FindGameObjectsWithTag("AbilityIcon");
+      display[0].GetComponent<AbilityDisplay>().ability = primary;
+      display[1].GetComponent<AbilityDisplay>().ability = secondary;
     }
   }
 

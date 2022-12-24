@@ -15,7 +15,7 @@ public class AbilityDisplay : Fusion.NetworkBehaviour {
     if (ability.cooldown_remaining.ExpiredOrNotRunning(Runner)) {
       GetComponent<CanvasRenderer>().SetAlpha(1.0f);
     } else {
-      GetComponent<CanvasRenderer>().SetAlpha(0.5f);
+      GetComponent<CanvasRenderer>().SetAlpha(0.2f);
     }
   }
 }
