@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - AbilityIcon
+  - Cooldown
   layers:
   - Default
   - TransparentFX
