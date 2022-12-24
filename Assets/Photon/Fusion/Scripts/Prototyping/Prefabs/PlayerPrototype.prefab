@@ -684,9 +684,8 @@ MonoBehaviour:
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
   gravity: -20
-  jumpImpulse: 8
-  acceleration: 30
-  braking: 10
+  acceleration: 20
+  braking: 5
   maxSpeed: 5
   rotationSpeed: 15
   _IsGrounded: 0
@@ -705,6 +704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Damage: 0
+  _Stunned: 0
   primary: {fileID: 5299960968737145700}
 --- !u!114 &5299960968737145700
 MonoBehaviour:
@@ -719,6 +719,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  cooldown_remaining: 0
   rockPrefab: {fileID: 2819041608224040416, guid: f011dc3536ee0dc4c911902d390d47cb,
     type: 3}

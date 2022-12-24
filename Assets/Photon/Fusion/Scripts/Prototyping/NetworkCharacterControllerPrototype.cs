@@ -8,7 +8,6 @@ using UnityEngine;
 public class NetworkCharacterControllerPrototype : NetworkTransform {
   [Header("Character Controller Settings")]
   public float gravity = -20.0f;
-  public float jumpImpulse = 8.0f;
   public float acceleration = 10.0f;
   public float braking = 10.0f;
   public float maxSpeed = 2.0f;
@@ -66,19 +65,6 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
   }
 
   /// <summary>
-  /// Basic implementation of a jump impulse (immediately integrates a vertical component to Velocity).
-  /// <param name="ignoreGrounded">Jump even if not in a grounded state.</param>
-  /// <param name="overrideImpulse">Optional field to override the jump impulse. If null, <see cref="jumpImpulse"/> is used.</param>
-  /// </summary>
-  public virtual void Jump(bool ignoreGrounded = false, float? overrideImpulse = null) {
-    if (IsGrounded || ignoreGrounded) {
-      var newVel = Velocity;
-      newVel.y += overrideImpulse ?? jumpImpulse;
-      Velocity = newVel;
-    }
-  }
-
-  /// <summary>
   /// Basic implementation of a character controller's movement function based on an intended direction.
   /// <param name="direction">Intended movement direction, subject to movement query, acceleration and max speed values.</param>
   /// </summary>
@@ -102,7 +88,8 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
     if (direction == default) {
       horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
     } else {
-      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
+      double stunned_acceleration = GetComponent<Wizard>().stunned() ? 0.1 : acceleration;
+      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * (float)stunned_acceleration * deltaTime, maxSpeed);
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
     }
 

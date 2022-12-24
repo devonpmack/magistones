@@ -66,14 +66,6 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
       direction = direction.normalized;
 
       MovementDirection = direction;
-
-      if (input.IsDown(NetworkInputPrototype.BUTTON_JUMP)) {
-        if (_ncc) {
-          _ncc.Jump();
-        } else {
-          direction += (TransformLocal ? transform.up : Vector3.up);
-        }
-      }
     } else {
       direction = MovementDirection;
     }
