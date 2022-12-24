@@ -5,10 +5,9 @@ public class DamageDisplay : MonoBehaviour {
   public Wizard wizard;
 
   // Update is called once per frame
-  void Update() {
+  void LateUpdate() {
     try {
       GetComponent<TMPro.TextMeshPro>().text = wizard.Damage.ToString() + (wizard.stunned() ? '*' : '%');
-
 
       transform.LookAt(Camera.main.transform.position);
 
