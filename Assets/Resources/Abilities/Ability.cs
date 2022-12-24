@@ -1,23 +1,16 @@
-using UnityEngine;
+using Fusion;
 
-public abstract class Ability : MonoBehaviour {
+public abstract class Ability : Fusion.NetworkBehaviour {
   abstract public float cooldown { get; }
-  abstract protected void onCast(Transform player);
+  abstract protected void onCast(NetworkInputPrototype input);
 
-  public float cooldown_remaining = 0.0f;
+  [Networked] public TickTimer cooldown_remaining { get; set; }
 
-  public void cast() {
-    if (cooldown_remaining <= 0.01f) {
-      onCast(transform);
+  public void cast(NetworkInputPrototype input) {
+    if (cooldown_remaining.ExpiredOrNotRunning(Runner)) {
+      onCast(input);
 
-      cooldown_remaining = cooldown;
-    }
-  }
-
-  void Update() {
-    if (cooldown_remaining > 0.0f) {
-
-      cooldown_remaining -= Time.deltaTime;
+      cooldown_remaining = TickTimer.CreateFromSeconds(Runner, 0.5f); ;
     }
   }
 }

@@ -10,8 +10,6 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   protected NetworkTransform _nt;
   protected Wizard _wz;
 
-  [Networked] private TickTimer delay { get; set; }
-
   [SerializeField] private Laser _prefabBall;
 
   [Networked]
@@ -91,19 +89,8 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
       transform.position += (direction * Speed * Runner.DeltaTime);
     }
 
-    if (delay.ExpiredOrNotRunning(Runner) && input.IsDown(NetworkInputPrototype.BUTTON_FIRE)) {
-      _wz.primary.cast();
-
-      delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
-
-      _nt.transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
-
-      Runner.Spawn(_prefabBall,
-      transform.position, transform.rotation,
-      Object.InputAuthority, (runner, o) => {
-        // Initialize the Ball before synchronizing it
-        o.GetComponent<Laser>().Init(_wz.Id);
-      });
+    if (input.IsDown(NetworkInputPrototype.BUTTON_FIRE)) {
+      _wz.primary.cast(input);
     }
 
     if (transform.position.y < -10) {

@@ -588,6 +588,7 @@ MonoBehaviour:
   - {fileID: 4065374778257232135}
   - {fileID: -7655463980351433282}
   - {fileID: 5678799191990199410}
+  - {fileID: 5299960968737145700}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
 MonoBehaviour:
@@ -717,4 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c793f465e2f2134e8d7ca804b9a83f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   cooldown_remaining: 0
+  rockPrefab: {fileID: 2819041608224040416, guid: f011dc3536ee0dc4c911902d390d47cb,
+    type: 3}
