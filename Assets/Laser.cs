@@ -24,6 +24,7 @@ public class Laser : NetworkBehaviour {
   // when it collides with a player push themm
   [System.Obsolete]
   private void OnTriggerEnter(Collider other) {
+    // todo check networked position against collider
     if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<Wizard>().Id != source) {
       Wizard wiz = other.gameObject.GetComponent<Wizard>();
 

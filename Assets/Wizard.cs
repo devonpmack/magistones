@@ -24,6 +24,7 @@ public class Wizard : NetworkBehaviour {
       GameObject[] display = GameObject.FindGameObjectsWithTag("AbilityIcon");
       display[0].GetComponent<AbilityDisplay>().ability = abilities[0];
       display[1].GetComponent<AbilityDisplay>().ability = abilities[1];
+      display[2].GetComponent<AbilityDisplay>().ability = abilities[2];
     }
   }
 
