@@ -46,6 +46,11 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
 
     if (bot) {
       _ncc.Move(transform.forward);
+
+      // if there are more than 2  gameobject tagged player, destroy myself
+      if (GameObject.FindGameObjectsWithTag("Player").Length > 2) {
+        NetworkObject.Destroy(gameObject);
+      }
     }
 
     Vector3 direction;

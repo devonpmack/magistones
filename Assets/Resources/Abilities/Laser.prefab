@@ -198,5 +198,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  velocity: 5
-  lifeTime: 5
+  velocity: 8
+  lifeTime: 3
