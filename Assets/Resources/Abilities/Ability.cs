@@ -10,7 +10,7 @@ public abstract class Ability : Fusion.NetworkBehaviour {
     if (cooldown_remaining.ExpiredOrNotRunning(Runner)) {
       onCast(input);
 
-      cooldown_remaining = TickTimer.CreateFromSeconds(Runner, 0.5f); ;
+      cooldown_remaining = TickTimer.CreateFromSeconds(Runner, cooldown); ;
     }
   }
 }

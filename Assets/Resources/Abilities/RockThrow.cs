@@ -6,7 +6,7 @@ public class RockThrow : Ability {
 
   public override float cooldown {
     get {
-      return .5f;
+      return 0.5f;
     }
   }
 

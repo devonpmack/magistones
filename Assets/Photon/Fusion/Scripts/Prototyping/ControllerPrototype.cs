@@ -86,8 +86,12 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
       transform.position += (direction * Speed * Runner.DeltaTime);
     }
 
-    if (input.IsDown(NetworkInputPrototype.BUTTON_FIRE)) {
+    if (input.IsDown(NetworkInputPrototype.BUTTON_PRIMARY)) {
       _wz.primary.cast(input);
+    }
+
+    if (input.IsDown(NetworkInputPrototype.BUTTON_SECONDARY)) {
+      _wz.secondary.cast(input);
     }
 
     if (transform.position.y < -10) {

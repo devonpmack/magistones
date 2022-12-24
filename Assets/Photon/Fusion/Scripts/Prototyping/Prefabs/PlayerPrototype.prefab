@@ -538,6 +538,7 @@ GameObject:
   - component: {fileID: -7655463980351433282}
   - component: {fileID: 5678799191990199410}
   - component: {fileID: 5299960968737145700}
+  - component: {fileID: 1413291418923136342}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -589,6 +590,7 @@ MonoBehaviour:
   - {fileID: -7655463980351433282}
   - {fileID: 5678799191990199410}
   - {fileID: 5299960968737145700}
+  - {fileID: 1413291418923136342}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
 MonoBehaviour:
@@ -706,6 +708,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Damage: 0
   primary: {fileID: 5299960968737145700}
+  secondary: {fileID: 1413291418923136342}
 --- !u!114 &5299960968737145700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,3 +724,16 @@ MonoBehaviour:
   _interpolationDataSource: 0
   rockPrefab: {fileID: 2819041608224040416, guid: f011dc3536ee0dc4c911902d390d47cb,
     type: 3}
+--- !u!114 &1413291418923136342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d03124dace169d43a0d18ddbd577df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0

@@ -8,6 +8,7 @@ public class Wizard : NetworkBehaviour {
   [Networked] public TickTimer stun_remaining { get; set; }
 
   public Ability primary;
+  public Ability secondary;
 
   public float damageMultiplier() {
     return (float)(1 + Math.Pow(Damage, 2) / 4000);
