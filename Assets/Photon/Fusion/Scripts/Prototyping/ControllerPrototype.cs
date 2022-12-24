@@ -8,6 +8,8 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   protected NetworkRigidbody _nrb;
   protected NetworkRigidbody2D _nrb2d;
   protected NetworkTransform _nt;
+  protected Wizard _wz;
+
   [Networked] private TickTimer delay { get; set; }
 
   [SerializeField] private Laser _prefabBall;
@@ -35,6 +37,7 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
     if (!_nrb) _nrb = GetComponent<NetworkRigidbody>();
     if (!_nrb2d) _nrb2d = GetComponent<NetworkRigidbody2D>();
     if (!_nt) _nt = GetComponent<NetworkTransform>();
+    if (!_wz) _wz = GetComponent<Wizard>();
   }
 
   public override void FixedUpdateNetwork() {
@@ -89,6 +92,8 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
     }
 
     if (delay.ExpiredOrNotRunning(Runner) && input.IsDown(NetworkInputPrototype.BUTTON_FIRE)) {
+      _wz.primary.cast();
+
       delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
 
       _nt.transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
@@ -97,14 +102,13 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
       transform.position, transform.rotation,
       Object.InputAuthority, (runner, o) => {
         // Initialize the Ball before synchronizing it
-        o.GetComponent<Laser>().Init(GetComponent<Wizard>().Id);
-        Debug.Log(gameObject.GetInstanceID());
+        o.GetComponent<Laser>().Init(_wz.Id);
       });
     }
 
     if (transform.position.y < -10) {
       transform.position = new Vector3(3, 1, 15);
-      GetComponent<Wizard>().Damage = 0;
+      _wz.Damage = 0;
     }
 
   }

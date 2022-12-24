@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 7291690687864886413}
   - component: {fileID: -7655463980351433282}
   - component: {fileID: 5678799191990199410}
+  - component: {fileID: 5299960968737145700}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -668,7 +669,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 602043736063956190}
-  InterpolateErrorCorrection: 1
+  InterpolateErrorCorrection: 0
   InterpolatedErrorCorrectionSettings:
     MinRate: 3.3
     MaxRate: 10
@@ -703,3 +704,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Damage: 0
+  primary: {fileID: 5299960968737145700}
+--- !u!114 &5299960968737145700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c793f465e2f2134e8d7ca804b9a83f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown_remaining: 0
