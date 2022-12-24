@@ -5,11 +5,11 @@ public class Laser : NetworkBehaviour {
   public float velocity;
   public float lifeTime;
 
-  private int source;
+  [Networked] private NetworkBehaviourId source { get; set; }
 
   [Networked] private TickTimer life { get; set; }
 
-  public void Init(int sourceId) {
+  public void Init(NetworkBehaviourId sourceId) {
     source = sourceId;
     life = TickTimer.CreateFromSeconds(Runner, lifeTime);
   }
@@ -24,10 +24,11 @@ public class Laser : NetworkBehaviour {
   // when it collides with a player push themm
   [System.Obsolete]
   private void OnTriggerEnter(Collider other) {
-    Debug.Log("Collided with: " + other.gameObject.name);
+    if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<Wizard>().Id != source) {
+      Wizard wiz = other.gameObject.GetComponent<Wizard>();
 
-    if (other.gameObject.tag == "Player" && other.gameObject.GetInstanceID() != source) {
-      other.gameObject.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (transform.forward * 10);
+      other.gameObject.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (transform.forward * 10 * wiz.damageMultiplier());
+      wiz.Damage += 10;
 
       Runner.Despawn(Object);
     }

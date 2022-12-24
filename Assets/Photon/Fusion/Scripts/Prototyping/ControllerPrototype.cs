@@ -97,12 +97,14 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
       transform.position, transform.rotation,
       Object.InputAuthority, (runner, o) => {
         // Initialize the Ball before synchronizing it
-        o.GetComponent<Laser>().Init(gameObject.GetInstanceID());
+        o.GetComponent<Laser>().Init(GetComponent<Wizard>().Id);
+        Debug.Log(gameObject.GetInstanceID());
       });
     }
 
     if (transform.position.y < -10) {
       transform.position = new Vector3(3, 1, 15);
+      GetComponent<Wizard>().Damage = 0;
     }
 
   }
