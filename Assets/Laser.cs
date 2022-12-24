@@ -27,7 +27,7 @@ public class Laser : NetworkBehaviour {
     if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<Wizard>().Id != source) {
       Wizard wiz = other.gameObject.GetComponent<Wizard>();
 
-      other.gameObject.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (transform.forward * 10 * wiz.damageMultiplier());
+      other.gameObject.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (transform.forward * 8 * wiz.damageMultiplier());
       wiz.Damage += 10;
       wiz.stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.4f);
 

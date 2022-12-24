@@ -10,7 +10,7 @@ public class Wizard : NetworkBehaviour {
   public Ability primary;
 
   public float damageMultiplier() {
-    return (float)(1 + Math.Pow(Damage, 2) / 2000);
+    return (float)(1 + Math.Pow(Damage, 2) / 4000);
   }
 
   public bool stunned() {

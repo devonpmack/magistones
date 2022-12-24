@@ -603,6 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  bot: 0
   _prefabBall: {fileID: 5909841615300454634, guid: f011dc3536ee0dc4c911902d390d47cb,
     type: 3}
   _MovementDirection: {x: 0, y: 0, z: 0}
@@ -684,7 +685,7 @@ MonoBehaviour:
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
   gravity: -20
-  acceleration: 20
+  acceleration: 30
   braking: 5
   maxSpeed: 5
   rotationSpeed: 15
@@ -704,7 +705,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Damage: 0
-  _Stunned: 0
   primary: {fileID: 5299960968737145700}
 --- !u!114 &5299960968737145700
 MonoBehaviour:

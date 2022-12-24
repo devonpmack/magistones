@@ -89,7 +89,9 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
       horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
     } else {
       double stunned_acceleration = GetComponent<Wizard>().stunned() ? 0.1 : acceleration;
-      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * (float)stunned_acceleration * deltaTime, maxSpeed);
+      Vector3 vel = horizontalVel + direction * (float)stunned_acceleration * deltaTime;
+
+      horizontalVel = GetComponent<Wizard>().stunned() ? vel : Vector3.ClampMagnitude(vel, maxSpeed);
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
     }
 

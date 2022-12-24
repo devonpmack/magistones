@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 355.6427, y: 64.35162}
+  m_CellSize: {x: 361.3045, y: 62.3266}
   m_Spacing: {x: 6, y: 6}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -10408,6 +10408,11 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: 3712494355296827817
       objectReference: {fileID: 0}
+    - target: {fileID: 8815895893571785557, guid: e4df49d0bf125a740a2c14ab6e887572,
+        type: 3}
+      propertyPath: bot
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8815895893571785558, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}
       propertyPath: m_RootOrder
@@ -10416,7 +10421,7 @@ PrefabInstance:
     - target: {fileID: 8815895893571785558, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.36
+      value: 4.86
       objectReference: {fileID: 0}
     - target: {fileID: 8815895893571785558, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}
@@ -10426,7 +10431,7 @@ PrefabInstance:
     - target: {fileID: 8815895893571785558, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.72
+      value: 14.37
       objectReference: {fileID: 0}
     - target: {fileID: 8815895893571785558, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}

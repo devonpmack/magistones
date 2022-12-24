@@ -9,6 +9,7 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   protected NetworkRigidbody2D _nrb2d;
   protected NetworkTransform _nt;
   protected Wizard _wz;
+  public bool bot = false;
 
   [SerializeField] private Laser _prefabBall;
 
@@ -41,6 +42,10 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   public override void FixedUpdateNetwork() {
     if (Runner.Config.PhysicsEngine == NetworkProjectConfig.PhysicsEngines.None) {
       return;
+    }
+
+    if (bot) {
+      _ncc.Move(transform.forward);
     }
 
     Vector3 direction;
@@ -86,7 +91,7 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
     }
 
     if (transform.position.y < -10) {
-      transform.position = new Vector3(3, 1, 15);
+      transform.position = new Vector3(5, 5, 14);
       _wz.Damage = 0;
     }
 
