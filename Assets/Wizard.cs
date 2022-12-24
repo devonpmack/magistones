@@ -7,8 +7,7 @@ public class Wizard : NetworkBehaviour {
   [Networked] public int Damage { get; set; }
   [Networked] public TickTimer stun_remaining { get; set; }
 
-  public Ability primary;
-  public Ability secondary;
+  public Ability[] abilities;
 
   public float damageMultiplier() {
     return (float)(1 + Math.Pow(Damage, 2) / 4000);
@@ -23,8 +22,8 @@ public class Wizard : NetworkBehaviour {
   void Start() {
     if (GetComponent<NetworkCharacterControllerPrototype>().HasInputAuthority) {
       GameObject[] display = GameObject.FindGameObjectsWithTag("AbilityIcon");
-      display[0].GetComponent<AbilityDisplay>().ability = primary;
-      display[1].GetComponent<AbilityDisplay>().ability = secondary;
+      display[0].GetComponent<AbilityDisplay>().ability = abilities[0];
+      display[1].GetComponent<AbilityDisplay>().ability = abilities[1];
     }
   }
 

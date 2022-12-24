@@ -29,14 +29,6 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_RIGHT, true);
     }
 
-    if (Input.GetKey(KeyCode.Space)) {
-      frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_JUMP, true);
-    }
-
-    if (Input.GetKey(KeyCode.C)) {
-      frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_CROUCH, true);
-    }
-
     if (Input.GetKey(KeyCode.E)) {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_ACTION1, true);
     }
@@ -57,12 +49,23 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_RELOAD, true);
     }
 
+
+    /* USED */
+
     if (Input.GetMouseButton(0)) {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_PRIMARY, true);
     }
 
     if (Input.GetMouseButton(1)) {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_SECONDARY, true);
+    }
+
+    if (Input.GetKey(KeyCode.Space)) {
+      frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_TERTIARY, true);
+    }
+
+    if (Input.GetKey(KeyCode.LeftShift)) {
+      frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_QUATERNARY, true);
     }
 
     Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -115,6 +118,7 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
 public struct NetworkInputPrototype : INetworkInput {
 
   public const int BUTTON_USE = 0;
+
   public const int BUTTON_PRIMARY = 1;
   public const int BUTTON_SECONDARY = 2;
 
@@ -123,8 +127,8 @@ public struct NetworkInputPrototype : INetworkInput {
   public const int BUTTON_LEFT = 5;
   public const int BUTTON_RIGHT = 6;
 
-  public const int BUTTON_JUMP = 7;
-  public const int BUTTON_CROUCH = 8;
+  public const int BUTTON_TERTIARY = 7;
+  public const int BUTTON_QUATERNARY = 8;
   public const int BUTTON_WALK = 9;
 
   public const int BUTTON_ACTION1 = 10;

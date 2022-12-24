@@ -92,12 +92,22 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
     }
 
     if (input.IsDown(NetworkInputPrototype.BUTTON_PRIMARY)) {
-      _wz.primary.cast(input);
+      _wz.abilities[0].cast(input);
     }
 
     if (input.IsDown(NetworkInputPrototype.BUTTON_SECONDARY)) {
-      _wz.secondary.cast(input);
+      _wz.abilities[1].cast(input);
     }
+
+    if (input.IsDown(NetworkInputPrototype.BUTTON_TERTIARY)) {
+      _wz.abilities[2].cast(input);
+    }
+
+    if (input.IsDown(NetworkInputPrototype.BUTTON_QUATERNARY)) {
+      _wz.abilities[3].cast(input);
+    }
+
+
 
     if (transform.position.y < -10) {
       transform.position = new Vector3(5, 5, 14);
