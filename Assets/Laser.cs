@@ -29,6 +29,7 @@ public class Laser : NetworkBehaviour {
 
       other.gameObject.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (transform.forward * 10 * wiz.damageMultiplier());
       wiz.Damage += 10;
+      wiz.stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.4f);
 
       Runner.Despawn(Object);
     }

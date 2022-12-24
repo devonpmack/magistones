@@ -28,11 +28,6 @@ public class Wizard : NetworkBehaviour {
 
   // Update is called once per frame
   void Update() {
-    // change color when stunned
-    if (stunned()) {
-      GetComponent<Renderer>().material.color = Color.red;
-    } else {
-      GetComponent<Renderer>().material.color = Color.white;
-    }
+
   }
 }
