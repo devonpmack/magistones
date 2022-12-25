@@ -19,20 +19,23 @@ public class Laser : NetworkBehaviour {
       Runner.Despawn(Object);
     else
       transform.position += velocity * transform.forward * Runner.DeltaTime;
-  }
 
-  // when it collides with a player push themm
-  [System.Obsolete]
-  private void OnTriggerEnter(Collider other) {
-    // todo check networked position against collider
-    if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<Wizard>().Id != source) {
-      Wizard wiz = other.gameObject.GetComponent<Wizard>();
 
-      other.gameObject.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (transform.forward * 8 * wiz.damageMultiplier());
-      wiz.Damage += 10;
-      wiz.stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.4f);
+    // if colliding with another player, do 10 damage
+    foreach (var player in GameObject.FindGameObjectsWithTag("Player")) {
+      // todo check networked position against collider
+      if (!player.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds))
+        continue;
 
-      Runner.Despawn(Object);
+      if (player.GetComponent<Wizard>().Id != source) {
+        Wizard wiz = player.GetComponent<Wizard>();
+
+        player.GetComponent<NetworkCharacterControllerPrototype>().Velocity = transform.forward * 10 * wiz.damageMultiplier();
+        wiz.Damage += 10;
+        wiz.stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.4f);
+
+        Runner.Despawn(Object);
+      }
     }
   }
 }
