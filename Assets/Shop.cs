@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Shop : MonoBehaviour {
   public Transform container;
+  public Transform ownedContainer;
   public Transform shopItemTemplate;
   public GameObject moneyDisplay;
 
@@ -22,6 +23,15 @@ public class Shop : MonoBehaviour {
     moneyDisplay.GetComponent<TMPro.TextMeshProUGUI>().text = "Money: " + money.ToString();
   }
 
+  public void purchase(Transform shopItem) {
+    if (money <= 0)
+      return;
+
+    money--;
+
+    shopItem.SetParent(ownedContainer);
+  }
+
   public void roll() {
     if (money <= 0)
       return;
@@ -35,6 +45,8 @@ public class Shop : MonoBehaviour {
 
     for (int i = 0; i < shop_items; i++) {
       var shopItem = Instantiate(shopItemTemplate, container);
+      Button buttonCtrl = shopItem.GetComponent<Button>();
+      buttonCtrl.onClick.AddListener(() => purchase(shopItem.transform));
 
       var ability = abilities[Random.Range(0, abilities.Length)];
 
