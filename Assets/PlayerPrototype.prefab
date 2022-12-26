@@ -668,6 +668,7 @@ GameObject:
   - component: {fileID: 5299960968737145700}
   - component: {fileID: 1413291418923136342}
   - component: {fileID: -6849054809362640697}
+  - component: {fileID: 9098606407253441098}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -720,6 +721,7 @@ MonoBehaviour:
   - {fileID: 5299960968737145700}
   - {fileID: 1413291418923136342}
   - {fileID: -6849054809362640697}
+  - {fileID: 9098606407253441098}
   - {fileID: 7431919340904743027}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
@@ -841,6 +843,7 @@ MonoBehaviour:
   - {fileID: 5299960968737145700}
   - {fileID: 1413291418923136342}
   - {fileID: -6849054809362640697}
+  - {fileID: 9098606407253441098}
 --- !u!114 &5299960968737145700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,3 +887,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   spinHitbox: {fileID: 7431919340904743027}
+--- !u!114 &9098606407253441098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f2443acdf9e4a38abd9b0a5bc54bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  hitbox: {fileID: 7810459892753035973, guid: 0d3983d5cbafd40a5ba15d8964668142, type: 3}
+  spawnDelay: 0.5
