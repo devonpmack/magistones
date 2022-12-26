@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class Home : MonoBehaviour
-{
-  // Start is called before the first frame update
-  void Start()
-  {
+public class Home : MonoBehaviour {
+  public GameObject homepage;
+  public GameObject roll;
 
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
-
-  public static  void OnClick()
-  {
+  public static void GoToGame() {
     UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+  }
+
+  public void GoToRoll() {
+    homepage.SetActive(false);
+    roll.SetActive(true);
+  }
+
+  public void GoToHome() {
+    homepage.SetActive(true);
+    roll.SetActive(false);
   }
 }
