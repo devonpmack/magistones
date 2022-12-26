@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: RockThrow
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 2c646cda5f384e743b51a665ada826b2, type: 3}
+  name: Rock Throw

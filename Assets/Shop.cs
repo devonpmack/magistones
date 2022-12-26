@@ -43,7 +43,9 @@ public class Shop : MonoBehaviour {
         if (ownedAbilities[i].level >= 3)
           return;
 
-        ownedAbilities[i].transform.Find("stars").GetComponent<TMPro.TextMeshProUGUI>().text = (++ownedAbilities[i].level).ToString();
+        // 0 = "" 1 = "*" 2 = "**"
+        ownedAbilities[i].transform.Find("stars").GetComponent<TMPro.TextMeshProUGUI>().text = new string('*', ++ownedAbilities[i].level);
+
         money--;
         Destroy(shopItem.gameObject);
         return;
@@ -52,7 +54,7 @@ public class Shop : MonoBehaviour {
 
     ownedAbilities.Add(new OwnedAbility {
       abilityName = abilityName,
-      level = 1,
+      level = 0,
       transform = shopItem
     });
     money--;

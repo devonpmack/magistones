@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Blink
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: a88fc4b85bf829f45bf07c16be9cb1d1, type: 3}
+  name: Blink
