@@ -3,7 +3,12 @@ guid: 2c793f465e2f2134e8d7ca804b9a83f4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Runner: {instanceID: 0}
+  - Object: {instanceID: 0}
+  - meta: {fileID: 11400000, guid: 6d75862ee1a5c428b973dc7b01a8dff0, type: 2}
+  - icon: {fileID: 21300000, guid: 2c646cda5f384e743b51a665ada826b2, type: 3}
+  - rockPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

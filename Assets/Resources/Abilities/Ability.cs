@@ -1,7 +1,13 @@
 using Fusion;
+using UnityEngine;
 
 public abstract class Ability : Fusion.NetworkBehaviour {
+  public AbilityMeta meta;
+
   abstract public float cooldown { get; }
+
+  public Sprite icon;
+
   abstract protected void onCast(NetworkInputPrototype input);
 
   [Networked] public TickTimer cooldown_remaining { get; set; }
