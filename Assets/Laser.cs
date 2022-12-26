@@ -15,11 +15,12 @@ public class Laser : NetworkBehaviour {
   }
 
   public override void FixedUpdateNetwork() {
-    if (life.Expired(Runner))
+    if (life.Expired(Runner)) {
       Runner.Despawn(Object);
-    else
+      return;
+    } else {
       transform.position += velocity * transform.forward * Runner.DeltaTime;
-
+    }
 
     // if colliding with another player, do 10 damage
     foreach (var player in GameObject.FindGameObjectsWithTag("Player")) {
@@ -27,14 +28,16 @@ public class Laser : NetworkBehaviour {
       if (!player.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds))
         continue;
 
+
       if (player.GetComponent<Wizard>().Id != source) {
         Wizard wiz = player.GetComponent<Wizard>();
 
         player.GetComponent<NetworkCharacterControllerPrototype>().Velocity = transform.forward * 10 * wiz.damageMultiplier();
-        wiz.Damage += 10;
         wiz.stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.4f);
 
         Runner.Despawn(Object);
+
+        wiz.Damage += 10;
       }
     }
   }
