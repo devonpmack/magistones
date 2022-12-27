@@ -17,16 +17,14 @@ public class Wizard : NetworkBehaviour {
     return !stun_remaining.ExpiredOrNotRunning(Runner);
   }
 
-
-  // Start is called before the first frame update
-  void Start() {
-    if (GetComponent<NetworkCharacterControllerPrototype>().HasInputAuthority) {
+  public override void Spawned() {
+    if (GetComponent<NetworkCharacterControllerPrototype>().HasInputAuthority && !GetComponent<ControllerPrototype>().bot) {
       GameObject[] display = GameObject.FindGameObjectsWithTag("AbilityIcon");
-      display[0].GetComponent<AbilityDisplay>().ability = abilities[0];
-      display[1].GetComponent<AbilityDisplay>().ability = abilities[1];
-      display[2].GetComponent<AbilityDisplay>().ability = abilities[2];
-      display[3].GetComponent<AbilityDisplay>().ability = abilities[3];
+      abilities = GetComponents<Ability>();
 
+      for (int i = 0; i < abilities.Length; i++) {
+        abilities[i].display = display[i].GetComponent<AbilityDisplay>();
+      }
     }
   }
 

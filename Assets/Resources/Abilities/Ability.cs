@@ -1,16 +1,13 @@
 using Fusion;
-using UnityEngine;
 
 public abstract class Ability : Fusion.NetworkBehaviour {
-  public AbilityMeta meta;
-
   abstract public float cooldown { get; }
-
-  public Sprite icon;
 
   abstract protected void onCast(NetworkInputPrototype input);
 
   [Networked] public TickTimer cooldown_remaining { get; set; }
+
+  public AbilityDisplay display;
 
   public void cast(NetworkInputPrototype input) {
     if (cooldown_remaining.ExpiredOrNotRunning(Runner)) {
@@ -18,5 +15,11 @@ public abstract class Ability : Fusion.NetworkBehaviour {
 
       cooldown_remaining = TickTimer.CreateFromSeconds(Runner, cooldown); ;
     }
+  }
+
+  public override void FixedUpdateNetwork() {
+    if (display == null) return;
+
+    display.UpdateCooldown(cooldown_remaining.RemainingTime(Runner));
   }
 }
