@@ -661,7 +661,6 @@ GameObject:
   - component: {fileID: 8815895893571785555}
   - component: {fileID: 8815895893571785557}
   - component: {fileID: 8358015882023670600}
-  - component: {fileID: 4065374778257232135}
   - component: {fileID: 7291690687864886413}
   - component: {fileID: -7655463980351433282}
   - component: {fileID: 5678799191990199410}
@@ -715,7 +714,6 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 8815895893571785557}
-  - {fileID: 4065374778257232135}
   - {fileID: -7655463980351433282}
   - {fileID: 5678799191990199410}
   - {fileID: 5299960968737145700}
@@ -757,21 +755,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4065374778257232135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8815895893571785564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72872188c080b844a9c9d1015cf8e60a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  DrawAreaOfInterestRadius: 0
-  Radius: 32
 --- !u!143 &7291690687864886413
 CharacterController:
   m_ObjectHideFlags: 0
@@ -857,6 +840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  meta: {fileID: 0}
+  icon: {fileID: 0}
   rockPrefab: {fileID: 2819041608224040416, guid: f011dc3536ee0dc4c911902d390d47cb,
     type: 3}
 --- !u!114 &1413291418923136342
@@ -872,6 +857,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  meta: {fileID: 0}
+  icon: {fileID: 0}
   blinkDistance: 3
 --- !u!114 &-6849054809362640697
 MonoBehaviour:
@@ -886,6 +873,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  meta: {fileID: 0}
+  icon: {fileID: 0}
   spinHitbox: {fileID: 7431919340904743027}
 --- !u!114 &9098606407253441098
 MonoBehaviour:
@@ -900,5 +889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  meta: {fileID: 0}
+  icon: {fileID: 0}
   hitbox: {fileID: 7810459892753035973, guid: 0d3983d5cbafd40a5ba15d8964668142, type: 3}
   spawnDelay: 0.5

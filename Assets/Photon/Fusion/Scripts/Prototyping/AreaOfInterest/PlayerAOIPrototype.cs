@@ -18,11 +18,11 @@ public class PlayerAOIPrototype : NetworkBehaviour {
 
   /// <summary>
   /// Radius around this GameObject that defines the Area Of Interest for the InputAuthority of the object.
-  /// The InputAuthority player of this <see cref="NetworkObject"/>, 
-  /// will receive updates for any other <see cref="NetworkObject"/> within this radius. 
+  /// The InputAuthority player of this <see cref="NetworkObject"/>,
+  /// will receive updates for any other <see cref="NetworkObject"/> within this radius.
   /// </summary>
   [InlineHelp]
-  public float Radius = 32f;
+  public float Radius = 0.5f;
 
   public override void FixedUpdateNetwork() {
 
