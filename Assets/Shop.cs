@@ -23,8 +23,10 @@ public class Shop : MonoBehaviour {
   // Start is called before the first frame update
   void Start() {
     abilities = AbilityMeta.getAll();
-    ownedAbilities = new List<OwnedAbility>();
-    roll();
+    this.ownedAbilities = new List<OwnedAbility>();
+    roll(true);
+
+    load();
   }
 
   // Update is called once per frame
@@ -59,13 +61,30 @@ public class Shop : MonoBehaviour {
     });
     money--;
     shopItem.SetParent(ownedContainer);
+    shopItem.GetComponent<Button>().onClick.RemoveAllListeners();
+    shopItem.GetComponent<Button>().onClick.AddListener(() => {
+      sell(shopItem.transform, abilityName);
+      save();
+    });
   }
 
-  public void roll() {
+  public void sell(Transform shopItem, string abilityName) {
+    for (int i = 0; i < ownedAbilities.Count; i++) {
+      if (ownedAbilities[i] != null && ownedAbilities[i].abilityName == abilityName) {
+        money += ownedAbilities[i].level + 1;
+        Destroy(shopItem.gameObject);
+        ownedAbilities.RemoveAt(i);
+        return;
+      }
+    }
+  }
+
+  public void roll(bool free = false) {
     if (money <= 0)
       return;
 
-    money -= 1;
+    if (!free)
+      money -= 1;
 
     // remove all shop items
     foreach (Transform child in container) {
@@ -77,9 +96,52 @@ public class Shop : MonoBehaviour {
       var ability = abilities[Random.Range(0, abilities.Length)];
 
       Button buttonCtrl = shopItem.GetComponent<Button>();
-      buttonCtrl.onClick.AddListener(() => purchase(shopItem.transform, ability.name));
+      buttonCtrl.onClick.AddListener(() => {
+        purchase(shopItem.transform, ability.name);
+        save();
+      });
 
       shopItem.Find("icon").GetComponent<Image>().sprite = ability.icon;
+    }
+  }
+
+  public void save() {
+    PersistencyManager.Data data = new PersistencyManager.Data(money);
+
+    foreach (OwnedAbility ownedAbility in ownedAbilities) {
+      data.ownedAbilities.Add(new PersistencyManager.Data.OwnedAbility {
+        abilityName = ownedAbility.abilityName,
+        level = ownedAbility.level
+      });
+
+      data.money = money;
+    }
+
+    PersistencyManager.save(data);
+  }
+
+  public void load() {
+    var loaded = PersistencyManager.load();
+    if (loaded == null)
+      return;
+
+    var data = (PersistencyManager.Data)loaded;
+    money = data.money;
+
+    foreach (PersistencyManager.Data.OwnedAbility ownedAbility in data.ownedAbilities) {
+      var shopItem = Instantiate(shopItemTemplate, ownedContainer);
+      var ability = AbilityMeta.get(ownedAbility.abilityName);
+      this.ownedAbilities.Add(new OwnedAbility {
+        abilityName = ability.name,
+        level = ownedAbility.level,
+        transform = shopItem
+      });
+
+      Button buttonCtrl = shopItem.GetComponent<Button>();
+      buttonCtrl.onClick.AddListener(() => { sell(shopItem.transform, ability.name); save(); });
+
+      shopItem.Find("icon").GetComponent<Image>().sprite = ability.icon;
+      shopItem.Find("stars").GetComponent<TMPro.TextMeshProUGUI>().text = new string('*', ownedAbility.level);
     }
   }
 }
