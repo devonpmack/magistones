@@ -8,6 +8,6 @@ public class Spin : Ability {
   }
 
   protected override void onCast(NetworkInputPrototype input) {
-    spinHitbox.Init(GetComponent<Wizard>().Id);
+    spinHitbox.gameObject.GetComponent<SpinHitbox>().Init(GetComponent<Wizard>().Id);
   }
 }

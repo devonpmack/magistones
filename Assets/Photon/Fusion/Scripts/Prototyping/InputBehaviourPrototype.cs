@@ -60,11 +60,11 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_SECONDARY, true);
     }
 
-    if (Input.GetKey(KeyCode.Space)) {
+    if (Input.GetKey(KeyCode.LeftShift)) {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_TERTIARY, true);
     }
 
-    if (Input.GetKey(KeyCode.LeftShift)) {
+    if (Input.GetKey(KeyCode.Space)) {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_QUATERNARY, true);
     }
 

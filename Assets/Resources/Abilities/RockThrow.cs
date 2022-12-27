@@ -2,8 +2,6 @@ using Fusion;
 using UnityEngine;
 
 public class RockThrow : Ability {
-  public GameObject rockPrefab;
-
   public override float cooldown {
     get {
       return 0.5f;
@@ -13,7 +11,7 @@ public class RockThrow : Ability {
   protected override void onCast(NetworkInputPrototype input) {
     transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
 
-    Runner.Spawn(rockPrefab,
+    Runner.Spawn(Resources.Load<GameObject>("Abilities/RockHitbox"),
       transform.position, transform.rotation,
       GetComponent<NetworkObject>().InputAuthority, (runner, o) => {
         // Initialize the Ball before synchronizing it

@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 1866094064506022597}
   - component: {fileID: 5909841615300454634}
   m_Layer: 0
-  m_Name: Laser
+  m_Name: RockHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

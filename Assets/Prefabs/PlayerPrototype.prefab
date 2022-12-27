@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 9024127428985375420}
   - component: {fileID: 7431919340904743027}
   m_Layer: 6
-  m_Name: Cylinder
+  m_Name: spinHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -664,10 +664,10 @@ GameObject:
   - component: {fileID: 7291690687864886413}
   - component: {fileID: -7655463980351433282}
   - component: {fileID: 5678799191990199410}
-  - component: {fileID: 5299960968737145700}
-  - component: {fileID: 1413291418923136342}
-  - component: {fileID: -6849054809362640697}
-  - component: {fileID: 9098606407253441098}
+  - component: {fileID: 3962255863710167714}
+  - component: {fileID: 4763336514218759031}
+  - component: {fileID: -2327307306809596008}
+  - component: {fileID: -7316827651609632409}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -716,10 +716,10 @@ MonoBehaviour:
   - {fileID: 8815895893571785557}
   - {fileID: -7655463980351433282}
   - {fileID: 5678799191990199410}
-  - {fileID: 5299960968737145700}
-  - {fileID: 1413291418923136342}
-  - {fileID: -6849054809362640697}
-  - {fileID: 9098606407253441098}
+  - {fileID: 3962255863710167714}
+  - {fileID: 4763336514218759031}
+  - {fileID: -2327307306809596008}
+  - {fileID: -7316827651609632409}
   - {fileID: 7431919340904743027}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
@@ -823,11 +823,11 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Damage: 0
   abilities:
-  - {fileID: 5299960968737145700}
-  - {fileID: 1413291418923136342}
-  - {fileID: -6849054809362640697}
-  - {fileID: 9098606407253441098}
---- !u!114 &5299960968737145700
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &3962255863710167714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -840,11 +840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  meta: {fileID: 0}
-  icon: {fileID: 0}
-  rockPrefab: {fileID: 2819041608224040416, guid: f011dc3536ee0dc4c911902d390d47cb,
-    type: 3}
---- !u!114 &1413291418923136342
+  display: {fileID: 0}
+--- !u!114 &4763336514218759031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -857,26 +854,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  meta: {fileID: 0}
-  icon: {fileID: 0}
+  display: {fileID: 0}
   blinkDistance: 3
---- !u!114 &-6849054809362640697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8815895893571785564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed90e44895ae324ab3018c7f15bfd5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  meta: {fileID: 0}
-  icon: {fileID: 0}
-  spinHitbox: {fileID: 7431919340904743027}
---- !u!114 &9098606407253441098
+--- !u!114 &-2327307306809596008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -889,7 +869,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  meta: {fileID: 0}
-  icon: {fileID: 0}
+  display: {fileID: 0}
   hitbox: {fileID: 7810459892753035973, guid: 0d3983d5cbafd40a5ba15d8964668142, type: 3}
   spawnDelay: 0.5
+--- !u!114 &-7316827651609632409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed90e44895ae324ab3018c7f15bfd5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  display: {fileID: 0}
+  spinHitbox: {fileID: 7431919340904743027}

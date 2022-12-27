@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Fusion;
 using UnityEngine;
 
@@ -18,9 +19,21 @@ public class Wizard : NetworkBehaviour {
   }
 
   public override void Spawned() {
+    abilities = new Ability[4];
+
+    // gets called each time someone joins, won't work
     if (GetComponent<NetworkCharacterControllerPrototype>().HasInputAuthority && !GetComponent<ControllerPrototype>().bot) {
       GameObject[] display = GameObject.FindGameObjectsWithTag("AbilityIcon");
-      abilities = GetComponents<Ability>();
+      var allAbilities = GetComponents<Ability>();
+
+      var data = PersistencyManager.load();
+      var abilityNum = 0;
+      if (data.HasValue) {
+        foreach (var ownedAbility in data.Value.ownedAbilities) {
+          Debug.Log(ownedAbility.abilityName);
+          abilities[abilityNum++] = allAbilities.First(a => a.GetType().Name.Replace(" ", string.Empty) == ownedAbility.abilityName.Replace(" ", string.Empty));
+        }
+      }
 
       for (int i = 0; i < abilities.Length; i++) {
         abilities[i].display = display[i].GetComponent<AbilityDisplay>();

@@ -6,9 +6,9 @@ MonoImporter:
   defaultReferences:
   - Runner: {instanceID: 0}
   - Object: {instanceID: 0}
-  - meta: {fileID: 11400000, guid: 6d75862ee1a5c428b973dc7b01a8dff0, type: 2}
-  - icon: {fileID: 21300000, guid: 2c646cda5f384e743b51a665ada826b2, type: 3}
-  - rockPrefab: {instanceID: 0}
+  - display: {instanceID: 0}
+  - rockPrefab: {fileID: 2819041608224040416, guid: f011dc3536ee0dc4c911902d390d47cb,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
