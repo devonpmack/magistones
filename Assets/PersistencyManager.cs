@@ -28,9 +28,15 @@ public class PersistencyManager : MonoBehaviour {
 
   public Data data;
 
-  public static Data? load() {
+  public static Data load() {
     if (!PlayerPrefs.HasKey("data")) {
-      return null;
+      var data = new Data(10);
+      data.ownedAbilities.Add(new Data.OwnedAbility() { abilityName = "None", level = 0 });
+      data.ownedAbilities.Add(new Data.OwnedAbility() { abilityName = "None", level = 0 });
+      data.ownedAbilities.Add(new Data.OwnedAbility() { abilityName = "None", level = 0 });
+      data.ownedAbilities.Add(new Data.OwnedAbility() { abilityName = "None", level = 0 });
+
+      return data;
     }
 
     return JsonUtility.FromJson<Data>(PlayerPrefs.GetString("data"));

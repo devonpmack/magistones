@@ -5,7 +5,7 @@ public class Home : MonoBehaviour {
   public GameObject roll;
 
   public static void GoToGame() {
-    UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+    // UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
   }
 
   public void GoToRoll() {

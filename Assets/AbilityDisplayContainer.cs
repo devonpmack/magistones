@@ -10,14 +10,12 @@ public class AbilityDisplayContainer : MonoBehaviour {
     var data = PersistencyManager.load();
 
     var i = 0;
-    if (data.HasValue) {
-      foreach (var ownedAbility in data.Value.ownedAbilities) {
-        var ability = AbilityMeta.get(ownedAbility.abilityName);
-        var abilityDisplay = Instantiate(abilityDisplayTemplate, transform);
+    foreach (var ownedAbility in data.ownedAbilities) {
+      var ability = AbilityMeta.get(ownedAbility.abilityName);
+      var abilityDisplay = Instantiate(abilityDisplayTemplate, transform);
 
-        abilityDisplay.GetComponent<Image>().sprite = ability.icon;
-        abilityDisplay.transform.Find("hotkey").GetComponent<TMPro.TextMeshProUGUI>().text = hotkeys[i++];
-      }
+      abilityDisplay.GetComponent<Image>().sprite = ability.icon;
+      abilityDisplay.transform.Find("hotkey").GetComponent<TMPro.TextMeshProUGUI>().text = hotkeys[i++];
     }
   }
 

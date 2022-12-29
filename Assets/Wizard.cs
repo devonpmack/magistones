@@ -28,11 +28,9 @@ public class Wizard : NetworkBehaviour {
 
       var data = PersistencyManager.load();
       var abilityNum = 0;
-      if (data.HasValue) {
-        foreach (var ownedAbility in data.Value.ownedAbilities) {
-          Debug.Log(ownedAbility.abilityName);
-          abilities[abilityNum++] = allAbilities.First(a => a.GetType().Name.Replace(" ", string.Empty) == ownedAbility.abilityName.Replace(" ", string.Empty));
-        }
+      foreach (var ownedAbility in data.ownedAbilities) {
+        Debug.Log(ownedAbility.abilityName);
+        abilities[abilityNum++] = allAbilities.First(a => a.GetType().Name.Replace(" ", string.Empty) == ownedAbility.abilityName.Replace(" ", string.Empty));
       }
 
       for (int i = 0; i < abilities.Length; i++) {

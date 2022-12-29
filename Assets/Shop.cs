@@ -9,6 +9,7 @@ public class Shop : MonoBehaviour {
     public Transform transform;
   }
 
+  public GameObject sellIndicator;
 
   public Transform container;
   public Transform ownedContainer;
@@ -19,6 +20,7 @@ public class Shop : MonoBehaviour {
   private int shop_items = 3;
   private AbilityMeta[] abilities;
   private List<OwnedAbility> ownedAbilities;
+  public GameObject noAbilityPrefab;
 
   // Start is called before the first frame update
   void Start() {
@@ -35,6 +37,21 @@ public class Shop : MonoBehaviour {
     moneyDisplay.GetComponent<TMPro.TextMeshProUGUI>().text = "Money: " + money.ToString();
   }
 
+  public void reorderAbility(string abilityName, int index) {
+    var toMove = ownedAbilities.Find(a => a.abilityName == abilityName);
+
+    // remove toMove from list
+    ownedAbilities.Remove(toMove);
+
+    // add toMove to new list at index
+    ownedAbilities.Insert(index, toMove);
+
+
+
+    save();
+  }
+
+
   public void purchase(Transform shopItem, string abilityName) {
     if (money <= 0)
       return;
@@ -42,7 +59,7 @@ public class Shop : MonoBehaviour {
     // if already in the array, just increment level
     for (int i = 0; i < ownedAbilities.Count; i++) {
       if (ownedAbilities[i] != null && ownedAbilities[i].abilityName == abilityName) {
-        if (ownedAbilities[i].level >= 3)
+        if (ownedAbilities[i].level >= 2)
           return;
 
         // 0 = "" 1 = "*" 2 = "**"
@@ -50,9 +67,25 @@ public class Shop : MonoBehaviour {
 
         money--;
         Destroy(shopItem.gameObject);
+        save();
         return;
       }
     }
+
+    // if there are already 4 abilities, check if any are None and delete one
+    if (ownedAbilities.Count >= 4) {
+      for (int i = 0; i < ownedAbilities.Count; i++) {
+        if (ownedAbilities[i] != null && ownedAbilities[i].abilityName == "None") {
+          Destroy(ownedAbilities[i].transform.gameObject);
+          ownedAbilities.RemoveAt(i);
+          break;
+        }
+      }
+    }
+
+    // if there are still 4 abilities, don't add another
+    if (ownedAbilities.Count >= 4)
+      return;
 
     ownedAbilities.Add(new OwnedAbility {
       abilityName = abilityName,
@@ -62,10 +95,9 @@ public class Shop : MonoBehaviour {
     money--;
     shopItem.SetParent(ownedContainer);
     shopItem.GetComponent<Button>().onClick.RemoveAllListeners();
-    shopItem.GetComponent<Button>().onClick.AddListener(() => {
-      sell(shopItem.transform, abilityName);
-      save();
-    });
+    shopItem.GetComponent<Draggable>().shop = this;
+    shopItem.GetComponent<Draggable>().isDraggable = true;
+    save();
   }
 
   public void sell(Transform shopItem, string abilityName) {
@@ -73,10 +105,17 @@ public class Shop : MonoBehaviour {
       if (ownedAbilities[i] != null && ownedAbilities[i].abilityName == abilityName) {
         money += ownedAbilities[i].level + 1;
         Destroy(shopItem.gameObject);
-        ownedAbilities.RemoveAt(i);
+        ownedAbilities[i].abilityName = "None";
+        ownedAbilities[i].level = 0;
+        ownedAbilities[i].transform = Instantiate(noAbilityPrefab, ownedContainer).transform;
+
+        save();
         return;
       }
     }
+
+
+    save();
   }
 
   public void roll(bool free = false) {
@@ -98,10 +137,10 @@ public class Shop : MonoBehaviour {
       Button buttonCtrl = shopItem.GetComponent<Button>();
       buttonCtrl.onClick.AddListener(() => {
         purchase(shopItem.transform, ability.name);
-        save();
       });
 
-      shopItem.Find("icon").GetComponent<Image>().sprite = ability.icon;
+      OwnedAbilitySetup(shopItem, ability.icon, 0, ability.name);
+      shopItem.GetComponent<Draggable>().isDraggable = false;
     }
   }
 
@@ -121,14 +160,20 @@ public class Shop : MonoBehaviour {
   }
 
   public void load() {
-    var loaded = PersistencyManager.load();
-    if (loaded == null)
-      return;
-
-    var data = (PersistencyManager.Data)loaded;
+    var data = PersistencyManager.load();
     money = data.money;
 
     foreach (PersistencyManager.Data.OwnedAbility ownedAbility in data.ownedAbilities) {
+      if (ownedAbility.abilityName == "None") {
+        var placeholder = Instantiate(noAbilityPrefab, ownedContainer);
+        this.ownedAbilities.Add(new OwnedAbility {
+          abilityName = "None",
+          level = 0,
+          transform = placeholder.transform
+        });
+        continue;
+      }
+
       var shopItem = Instantiate(shopItemTemplate, ownedContainer);
       var ability = AbilityMeta.get(ownedAbility.abilityName);
       this.ownedAbilities.Add(new OwnedAbility {
@@ -137,11 +182,14 @@ public class Shop : MonoBehaviour {
         transform = shopItem
       });
 
-      Button buttonCtrl = shopItem.GetComponent<Button>();
-      buttonCtrl.onClick.AddListener(() => { sell(shopItem.transform, ability.name); save(); });
-
-      shopItem.Find("icon").GetComponent<Image>().sprite = ability.icon;
-      shopItem.Find("stars").GetComponent<TMPro.TextMeshProUGUI>().text = new string('*', ownedAbility.level);
+      OwnedAbilitySetup(shopItem, ability.icon, ownedAbility.level, ability.name);
     }
+  }
+
+  private void OwnedAbilitySetup(Transform shopItem, Sprite icon, int level, string name) {
+    shopItem.GetComponent<Draggable>().shop = this;
+    shopItem.GetComponent<Draggable>().abilityName = name;
+    shopItem.Find("icon").GetComponent<Image>().sprite = icon;
+    shopItem.Find("stars").GetComponent<TMPro.TextMeshProUGUI>().text = new string('*', level);
   }
 }
