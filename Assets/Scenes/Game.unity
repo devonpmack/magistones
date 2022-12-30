@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 355.92987, y: 64.24707}
+  m_CellSize: {x: 359.78156, y: 62.86371}
   m_Spacing: {x: 6, y: 6}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -12574,6 +12574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityDisplayTemplate: {fileID: 5144795573184672295, guid: 468f1402b844a284d8e2876096f66d3a,
+    type: 3}
+  noAbilityPrefab: {fileID: 7194862956521113445, guid: 823281a98a6c37343a73e1a2aaa8efef,
     type: 3}
 --- !u!1 &1919384550
 GameObject:

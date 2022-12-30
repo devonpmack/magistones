@@ -11,6 +11,7 @@ public class PersistencyManager : MonoBehaviour {
       public int level;
     }
 
+    public List<string> shop;
     public int lives;
     public int wins;
     public int money;
@@ -20,6 +21,7 @@ public class PersistencyManager : MonoBehaviour {
 
     public Data(int money) {
       this.money = money;
+      shop = null;
       lives = 3;
       wins = 0;
       ownedAbilities = new List<OwnedAbility>();

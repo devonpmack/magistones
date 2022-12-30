@@ -10,6 +10,7 @@ public class Shop : MonoBehaviour {
   }
 
   public GameObject sellIndicator;
+  public List<string> inShop;
 
   public Transform container;
   public Transform ownedContainer;
@@ -26,7 +27,6 @@ public class Shop : MonoBehaviour {
   void Start() {
     abilities = AbilityMeta.getAll();
     this.ownedAbilities = new List<OwnedAbility>();
-    roll(true);
 
     load();
   }
@@ -67,6 +67,7 @@ public class Shop : MonoBehaviour {
 
         money--;
         Destroy(shopItem.gameObject);
+        inShop.Remove(abilityName);
         save();
         return;
       }
@@ -92,11 +93,13 @@ public class Shop : MonoBehaviour {
       level = 0,
       transform = shopItem
     });
+
     money--;
     shopItem.SetParent(ownedContainer);
     shopItem.GetComponent<Button>().onClick.RemoveAllListeners();
     shopItem.GetComponent<Draggable>().shop = this;
     shopItem.GetComponent<Draggable>().isDraggable = true;
+    inShop.Remove(abilityName);
     save();
   }
 
@@ -130,6 +133,8 @@ public class Shop : MonoBehaviour {
       GameObject.Destroy(child.gameObject);
     }
 
+    inShop = new List<string>();
+
     for (int i = 0; i < shop_items; i++) {
       var shopItem = Instantiate(shopItemTemplate, container);
       var ability = abilities[Random.Range(0, abilities.Length)];
@@ -138,10 +143,13 @@ public class Shop : MonoBehaviour {
       buttonCtrl.onClick.AddListener(() => {
         purchase(shopItem.transform, ability.name);
       });
+      inShop.Add(ability.name);
 
       OwnedAbilitySetup(shopItem, ability.icon, 0, ability.name);
       shopItem.GetComponent<Draggable>().isDraggable = false;
     }
+
+    save();
   }
 
   public void save() {
@@ -156,12 +164,33 @@ public class Shop : MonoBehaviour {
       data.money = money;
     }
 
+    data.shop = inShop;
+
     PersistencyManager.save(data);
   }
 
   public void load() {
     var data = PersistencyManager.load();
     money = data.money;
+
+    if (data.shop == null) {
+      roll(true);
+    } else {
+      inShop = data.shop;
+
+      foreach (string abilityName in inShop) {
+        var shopItem = Instantiate(shopItemTemplate, container);
+        var ability = AbilityMeta.get(abilityName);
+
+        Button buttonCtrl = shopItem.GetComponent<Button>();
+        buttonCtrl.onClick.AddListener(() => {
+          purchase(shopItem.transform, ability.name);
+        });
+
+        OwnedAbilitySetup(shopItem, ability.icon, 0, ability.name);
+        shopItem.GetComponent<Draggable>().isDraggable = false;
+      }
+    }
 
     foreach (PersistencyManager.Data.OwnedAbility ownedAbility in data.ownedAbilities) {
       if (ownedAbility.abilityName == "None") {
