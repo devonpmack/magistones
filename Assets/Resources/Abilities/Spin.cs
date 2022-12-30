@@ -1,3 +1,5 @@
+using Fusion;
+
 public class Spin : Ability {
   public SpinHitbox spinHitbox;
 
@@ -8,6 +10,11 @@ public class Spin : Ability {
   }
 
   protected override void onCast(NetworkInputPrototype input) {
-    spinHitbox.gameObject.GetComponent<SpinHitbox>().Init(GetComponent<Wizard>().Id);
+    Runner.Spawn(spinHitbox,
+      transform.position, transform.rotation,
+      GetComponent<NetworkObject>().InputAuthority, (runner, o) => {
+        o.GetComponent<SpinHitbox>().Init(GetComponent<Wizard>().Id);
+        o.transform.SetParent(transform);
+      });
   }
 }

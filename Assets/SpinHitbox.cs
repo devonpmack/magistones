@@ -11,7 +11,6 @@ public class SpinHitbox : NetworkBehaviour {
   public void Init(NetworkBehaviourId sourceId) {
     source = sourceId;
     life = TickTimer.CreateFromSeconds(Runner, lifeTime);
-    gameObject.SetActive(true);
   }
 
   public override void FixedUpdateNetwork() {
@@ -33,6 +32,6 @@ public class SpinHitbox : NetworkBehaviour {
     }
 
     if (life.ExpiredOrNotRunning(Runner))
-      gameObject.SetActive(false);
+      Runner.Despawn(Object);
   }
 }
