@@ -29,7 +29,7 @@ public class SpinHitbox : NetworkBehaviour {
         if (player.GetComponent<NetworkObject>().InputAuthority != source) {
           Wizard wiz = player.GetComponent<Wizard>();
 
-          player.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (player.transform.position - transform.position).normalized * 20 * wiz.damageMultiplier();
+          player.GetComponent<NetworkCharacterControllerPrototype>().Velocity = (player.transform.position - transform.position).normalized * 12 * wiz.damageMultiplier();
           wiz.Damage += 20;
           wiz.stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.4f);
         }

@@ -115,6 +115,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   velocity: 14
   lifeTime: 1
+  damage: 12
 --- !u!114 &1641261558608879267
 MonoBehaviour:
   m_ObjectHideFlags: 0

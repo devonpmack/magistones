@@ -25,7 +25,7 @@ public class FinalChapter : Ability {
       transform.position, rotation,
       GetComponent<NetworkObject>().InputAuthority, (runner, o) => {
         // Initialize the Ball before synchronizing it
-        o.GetComponent<Projectile>().Init(GetComponent<Wizard>().Id);
+        o.GetComponent<Projectile>().Init(Object.InputAuthority);
       });
   }
 

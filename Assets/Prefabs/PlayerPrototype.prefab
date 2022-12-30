@@ -554,6 +554,7 @@ GameObject:
   - component: {fileID: 4763336514218759031}
   - component: {fileID: -2327307306809596008}
   - component: {fileID: -7316827651609632409}
+  - component: {fileID: -2445564814379733887}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -606,6 +607,7 @@ MonoBehaviour:
   - {fileID: 4763336514218759031}
   - {fileID: -2327307306809596008}
   - {fileID: -7316827651609632409}
+  - {fileID: -2445564814379733887}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
 MonoBehaviour:
@@ -776,4 +778,21 @@ MonoBehaviour:
   cooldown: 5
   display: {fileID: 0}
   spinHitbox: {fileID: 6535199041426614398, guid: 9f5ee430ebe0b3d4ba2bed208a22daf2,
+    type: 3}
+--- !u!114 &-2445564814379733887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0066ef763a8a8e741b768a348ec873b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  cooldown: 5
+  display: {fileID: 0}
+  projectile: {fileID: 3707910779873791550, guid: 22eeb441c4465d545a5607b095c0bae3,
     type: 3}

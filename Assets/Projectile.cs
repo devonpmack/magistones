@@ -4,17 +4,16 @@ using UnityEngine;
 public class Projectile : NetworkBehaviour {
   public float velocity;
   public float lifeTime;
+  public float damage;
 
-  [Networked] private NetworkBehaviourId source { get; set; }
+  [Networked] private PlayerRef source { get; set; }
 
   [Networked] private TickTimer life { get; set; }
 
-  public void Init(NetworkBehaviourId sourceId) {
+  public void Init(PlayerRef sourceId) {
     source = sourceId;
     life = TickTimer.CreateFromSeconds(Runner, lifeTime);
-    Object.ReleaseStateAuthority();
   }
-
   public override void FixedUpdateNetwork() {
     if (Object.HasStateAuthority) {
       if (life.Expired(Runner)) {
@@ -30,13 +29,13 @@ public class Projectile : NetworkBehaviour {
       if (!player.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds))
         continue;
 
-      if (player.GetComponent<Wizard>().Id != source) {
+      if (player.GetComponent<NetworkObject>().InputAuthority != source) {
         Wizard wiz = player.GetComponent<Wizard>();
 
         if (player.GetComponent<NetworkObject>().HasStateAuthority) {
-          player.GetComponent<NetworkCharacterControllerPrototype>().Velocity = transform.forward * 10 * wiz.damageMultiplier();
+          player.GetComponent<NetworkCharacterControllerPrototype>().Velocity = transform.forward * damage * wiz.damageMultiplier();
           wiz.stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.4f);
-          wiz.Damage += 10;
+          wiz.Damage += Mathf.Abs((int)damage);
 
           Runner.Despawn(Object);
         }

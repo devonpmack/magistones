@@ -1,15 +1,16 @@
 using Fusion;
 using UnityEngine;
 
-public class RockThrow : Ability {
+public class Hook : Ability {
+  public Projectile projectile;
+
   protected override void onCast(NetworkInputPrototype input) {
     transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
 
-    Runner.Spawn(Resources.Load<GameObject>("Abilities/RockHitbox"),
+    Runner.Spawn(projectile,
       transform.position, transform.rotation,
       GetComponent<NetworkObject>().InputAuthority, (runner, o) => {
-        // Initialize the Ball before synchronizing it
-        o.GetComponent<Laser>().Init(Object.InputAuthority);
+        o.GetComponent<Projectile>().Init(Object.InputAuthority);
       });
   }
 }
