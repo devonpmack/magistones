@@ -34,7 +34,6 @@ public class Draggable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     } else {
       transform.SetSiblingIndex(index);
 
-      Debug.Log("reorder " + abilityName + " to " + index);
       shop.reorderAbility(abilityName, index);
     }
   }

@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 2270425538631742834}
   - component: {fileID: 2270425538631742845}
   - component: {fileID: -1029039191099518946}
+  - component: {fileID: -8262501877744349948}
   m_Layer: 5
   m_Name: abilityTemplate
   m_TagString: Untagged
@@ -347,3 +348,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9a1006e5ac03b419ac5777bb89b9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placeholder: {fileID: 0}
+  shop: {fileID: 0}
+  abilityName: 
+  isDraggable: 1
+--- !u!114 &-8262501877744349948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270425538631742847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: f1d1c287ded68be43934c42c517f05d2, type: 2}
+  infoLeft: Hello
+  infoRight: 

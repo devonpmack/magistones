@@ -23,6 +23,7 @@ public class AbilityDisplayContainer : MonoBehaviour {
 
       abilityDisplay.GetComponent<Image>().sprite = ability.icon;
       abilityDisplay.transform.Find("hotkey").GetComponent<TMPro.TextMeshProUGUI>().text = hotkeys[i++];
+      ability.setTooltip(abilityDisplay.GetComponent<SimpleTooltip>(), ownedAbility.level);
     }
   }
 

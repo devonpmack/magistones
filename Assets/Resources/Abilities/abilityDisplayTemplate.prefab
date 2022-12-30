@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 5144795573184672293}
   - component: {fileID: 5144795573184672291}
   - component: {fileID: 5144795573184672288}
+  - component: {fileID: -1387978537800630666}
   m_Layer: 5
   m_Name: abilityDisplayTemplate
   m_TagString: AbilityIcon
@@ -227,7 +228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3e3df25800db84a8c5af27b73c69c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ability: {fileID: 0}
   cooldown: {fileID: 5144795573300371088}
 --- !u!114 &5144795573184672288
 MonoBehaviour:
@@ -252,6 +252,21 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours: []
   SimulationBehaviours: []
+--- !u!114 &-1387978537800630666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5144795573184672295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: f1d1c287ded68be43934c42c517f05d2, type: 2}
+  infoLeft: 
+  infoRight: 
 --- !u!1 &5144795573300371088
 GameObject:
   m_ObjectHideFlags: 0

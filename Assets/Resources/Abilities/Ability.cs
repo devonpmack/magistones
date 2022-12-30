@@ -2,7 +2,7 @@ using Fusion;
 using UnityEngine;
 
 public abstract class Ability : Fusion.NetworkBehaviour {
-  public float cooldown;
+  public AbilityMeta meta;
 
   abstract protected void onCast(NetworkInputPrototype input);
 
@@ -15,7 +15,7 @@ public abstract class Ability : Fusion.NetworkBehaviour {
     if (cooldown_remaining.ExpiredOrNotRunning(Runner)) {
       onCast(input);
 
-      cooldown_remaining = TickTimer.CreateFromSeconds(Runner, cooldown); ;
+      cooldown_remaining = TickTimer.CreateFromSeconds(Runner, meta.cooldown); ;
     }
   }
 

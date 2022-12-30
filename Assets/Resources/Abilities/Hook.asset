@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: c9a9d0c5034ca0644a46f43fc9e67fac, type: 3}
   name: Hook
+  description: Send out a projectile that pulls towards you
+  cooldown: 6

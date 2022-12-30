@@ -34,7 +34,7 @@ public class Shop : MonoBehaviour {
   // Update is called once per frame
   void Update() {
     // update TMP text
-    moneyDisplay.GetComponent<TMPro.TextMeshProUGUI>().text = "Money: " + money.ToString();
+    moneyDisplay.GetComponent<TMPro.TextMeshProUGUI>().text = "Gold: " + money.ToString();
   }
 
   public void reorderAbility(string abilityName, int index) {
@@ -149,7 +149,7 @@ public class Shop : MonoBehaviour {
       });
       inShop.Add(ability.name);
 
-      OwnedAbilitySetup(shopItem, ability.icon, 0, ability.name);
+      OwnedAbilitySetup(shopItem, 0, ability);
       shopItem.GetComponent<Draggable>().isDraggable = false;
     }
 
@@ -191,7 +191,7 @@ public class Shop : MonoBehaviour {
           purchase(shopItem.transform, ability.name);
         });
 
-        OwnedAbilitySetup(shopItem, ability.icon, 0, ability.name);
+        OwnedAbilitySetup(shopItem, 0, ability);
         shopItem.GetComponent<Draggable>().isDraggable = false;
       }
     }
@@ -215,14 +215,15 @@ public class Shop : MonoBehaviour {
         transform = shopItem
       });
 
-      OwnedAbilitySetup(shopItem, ability.icon, ownedAbility.level, ability.name);
+      OwnedAbilitySetup(shopItem, ownedAbility.level, ability);
     }
   }
 
-  private void OwnedAbilitySetup(Transform shopItem, Sprite icon, int level, string name) {
+  private void OwnedAbilitySetup(Transform shopItem, int level, AbilityMeta meta) {
     shopItem.GetComponent<Draggable>().shop = this;
-    shopItem.GetComponent<Draggable>().abilityName = name;
-    shopItem.Find("icon").GetComponent<Image>().sprite = icon;
+    shopItem.GetComponent<Draggable>().abilityName = meta.name;
+    shopItem.Find("icon").GetComponent<Image>().sprite = meta.icon;
     shopItem.Find("stars").GetComponent<TMPro.TextMeshProUGUI>().text = new string('*', level);
+    meta.setTooltip(shopItem.GetComponent<SimpleTooltip>(), level);
   }
 }

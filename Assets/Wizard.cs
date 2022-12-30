@@ -20,8 +20,6 @@ public class Wizard : NetworkBehaviour {
       if (ownedAbility == "None")
         continue;
 
-      Debug.Log(ownedAbility);
-
       abilities[abilityNum++] = allAbilities.First(a => a.GetType().Name.Replace(" ", string.Empty) == ownedAbility.Replace(" ", string.Empty));
     }
   }

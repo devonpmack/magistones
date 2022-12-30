@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5777f517135fb1c4b9bed50b1dfdde1b, type: 3}
   name: Spin
+  description: Perform a spin, pushing nearby players away
+  cooldown: 5
