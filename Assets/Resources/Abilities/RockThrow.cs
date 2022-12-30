@@ -9,7 +9,7 @@ public class RockThrow : Ability {
       transform.position, transform.rotation,
       GetComponent<NetworkObject>().InputAuthority, (runner, o) => {
         // Initialize the Ball before synchronizing it
-        o.GetComponent<Laser>().Init(Object.InputAuthority);
+        o.GetComponent<Projectile>().Init(Object.InputAuthority);
       });
   }
 }

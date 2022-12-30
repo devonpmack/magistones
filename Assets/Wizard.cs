@@ -26,13 +26,18 @@ public class Wizard : NetworkBehaviour {
     }
   }
 
-
   public float damageMultiplier() {
     return (float)(1 + Math.Pow(Damage, 2) / 4000);
   }
 
   public bool stunned() {
     return !stun_remaining.ExpiredOrNotRunning(Runner);
+  }
+
+  public void DoDamage(int damage, Vector3 direction, float stun_duration = 0.4f) {
+    GetComponent<NetworkCharacterControllerPrototype>().Velocity = direction.normalized * damage * damageMultiplier();
+    Damage += damage;
+    stun_remaining = TickTimer.CreateFromSeconds(Runner, stun_duration);
   }
 
   public override void Spawned() {

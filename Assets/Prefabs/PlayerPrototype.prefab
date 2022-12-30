@@ -623,8 +623,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   bot: 0
-  _prefabBall: {fileID: 5909841615300454634, guid: f011dc3536ee0dc4c911902d390d47cb,
-    type: 3}
   _MovementDirection: {x: 0, y: 0, z: 0}
   TransformLocal: 0
   Speed: 6
@@ -758,10 +756,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  cooldown: 8
+  cooldown: 10
   display: {fileID: 0}
   hitbox: {fileID: 7810459892753035973, guid: 0d3983d5cbafd40a5ba15d8964668142, type: 3}
-  spawnDelay: 0.5
+  spawnDelay: 0.3
 --- !u!114 &-7316827651609632409
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5687704432862996308}
   - component: {fileID: 1413329401012795696}
   - component: {fileID: 1866094064506022597}
-  - component: {fileID: 5909841615300454634}
+  - component: {fileID: 3284101522680803305}
   m_Layer: 0
   m_Name: RockHitbox
   m_TagString: Untagged
@@ -170,7 +170,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5687704432862996308}
-  - {fileID: 5909841615300454634}
+  - {fileID: 3284101522680803305}
   SimulationBehaviours: []
 --- !u!135 &1866094064506022597
 SphereCollider:
@@ -185,7 +185,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.76
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5909841615300454634
+--- !u!114 &3284101522680803305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,10 +194,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2819041608224040416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a97d8b27a29f3ba49801e07d6c98bdb6, type: 3}
+  m_Script: {fileID: 11500000, guid: a6867fa09c3d24ae5bcbe0ec3e391151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 2
+  _interpolationDataSource: 0
   velocity: 14
   lifeTime: 3
-  damage: 20
+  damage: 13

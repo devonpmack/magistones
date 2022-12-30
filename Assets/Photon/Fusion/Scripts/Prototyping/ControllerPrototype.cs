@@ -11,8 +11,6 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   protected Wizard _wz;
   public bool bot = false;
 
-  [SerializeField] private Laser _prefabBall;
-
   [Networked]
   public Vector3 MovementDirection { get; set; }
 
