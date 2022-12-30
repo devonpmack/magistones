@@ -2,12 +2,6 @@ using Fusion;
 using UnityEngine;
 
 public class RockThrow : Ability {
-  public override float cooldown {
-    get {
-      return 0.5f;
-    }
-  }
-
   protected override void onCast(NetworkInputPrototype input) {
     transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
 

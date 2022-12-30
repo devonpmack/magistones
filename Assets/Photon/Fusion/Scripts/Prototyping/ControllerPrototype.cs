@@ -45,6 +45,7 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
     }
 
     if (bot) {
+      transform.LookAt(new Vector3(4.5f, transform.position.y, 13));
       _ncc.Move(transform.forward);
 
       // if there are more than 2  gameobject tagged player, destroy myself

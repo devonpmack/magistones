@@ -1,12 +1,6 @@
 using UnityEngine;
 
 public class Blink : Ability {
-  public override float cooldown {
-    get {
-      return 3f;
-    }
-  }
-
   public float blinkDistance = 3f;
 
   protected override void onCast(NetworkInputPrototype input) {

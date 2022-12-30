@@ -2,7 +2,7 @@ using Fusion;
 using UnityEngine;
 
 public abstract class Ability : Fusion.NetworkBehaviour {
-  abstract public float cooldown { get; }
+  public float cooldown;
 
   abstract protected void onCast(NetworkInputPrototype input);
 

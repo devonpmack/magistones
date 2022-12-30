@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1876170888046108797}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7737074709297381393}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 2
+  _interpolationDataSource: 1
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 4245137166954587341}
   InterpolateErrorCorrection: 1
@@ -183,7 +183,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.53
+  m_Radius: 0.76
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5909841615300454634
 MonoBehaviour:
@@ -197,6 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97d8b27a29f3ba49801e07d6c98bdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  velocity: 8
+  _interpolationDataSource: 2
+  velocity: 14
   lifeTime: 3

@@ -6,12 +6,6 @@ public class FinalChapter : Ability {
   public GameObject hitbox;
   public float spawnDelay;
 
-  public override float cooldown {
-    get {
-      return 1f;
-    }
-  }
-
   protected override void onCast(NetworkInputPrototype input) {
     transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
 
