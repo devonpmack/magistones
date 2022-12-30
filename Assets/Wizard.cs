@@ -10,6 +10,23 @@ public class Wizard : NetworkBehaviour {
 
   public Ability[] abilities;
 
+
+  [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.All)]
+  public void RPC_Abilities(string[] ownedAbilities) {
+    var allAbilities = GetComponents<Ability>();
+
+    var abilityNum = 0;
+    foreach (var ownedAbility in ownedAbilities) {
+      if (ownedAbility == "None")
+        continue;
+
+      Debug.Log(ownedAbility);
+
+      abilities[abilityNum++] = allAbilities.First(a => a.GetType().Name.Replace(" ", string.Empty) == ownedAbility.Replace(" ", string.Empty));
+    }
+  }
+
+
   public float damageMultiplier() {
     return (float)(1 + Math.Pow(Damage, 2) / 4000);
   }
@@ -24,16 +41,9 @@ public class Wizard : NetworkBehaviour {
     // gets called each time someone joins, won't work
     if (GetComponent<NetworkCharacterControllerPrototype>().HasInputAuthority && !GetComponent<ControllerPrototype>().bot) {
       GameObject[] display = GameObject.FindGameObjectsWithTag("AbilityIcon");
-      var allAbilities = GetComponents<Ability>();
 
       var data = PersistencyManager.load();
-      var abilityNum = 0;
-      foreach (var ownedAbility in data.ownedAbilities) {
-        if (ownedAbility.abilityName == "None")
-          continue;
-
-        abilities[abilityNum++] = allAbilities.First(a => a.GetType().Name.Replace(" ", string.Empty) == ownedAbility.abilityName.Replace(" ", string.Empty));
-      }
+      RPC_Abilities(data.ownedAbilities.Select(a => a.abilityName).ToArray());
 
       for (int i = 0; i < abilities.Length; i++) {
         abilities[i].display = display[i].GetComponent<AbilityDisplay>();

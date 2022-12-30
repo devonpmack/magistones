@@ -1,10 +1,11 @@
 
 using Fusion;
+using UnityEngine;
 
 /// <summary>
 /// Prototyping component for spawning Player avatars.
 /// </summary>
-[SimulationBehaviour(Stages = SimulationStages.Forward, Modes =  SimulationModes.Server | SimulationModes.Host)]
+[SimulationBehaviour(Stages = SimulationStages.Forward, Modes = SimulationModes.Server | SimulationModes.Host)]
 public class PlayerSpawnerPrototype : SpawnerPrototype<PlayerSpawnPointPrototype>, IPlayerJoined, IPlayerLeft, ISceneLoadDone {
 
 #if UNITY_EDITOR
@@ -24,6 +25,8 @@ public class PlayerSpawnerPrototype : SpawnerPrototype<PlayerSpawnPointPrototype
 #endif
 
   protected override void RegisterPlayerAndObject(PlayerRef player, NetworkObject playerObject) {
+    Debug.Log($"Player {player} joined with object {playerObject}");
+
     base.RegisterPlayerAndObject(player, playerObject);
 
     Runner.SetPlayerObject(player, playerObject);

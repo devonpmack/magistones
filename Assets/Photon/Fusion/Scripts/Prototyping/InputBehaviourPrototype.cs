@@ -89,7 +89,8 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
   public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
   public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
   public void OnDisconnectedFromServer(NetworkRunner runner) { }
-  public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+  public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) {
+  }
   public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
   public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
   public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }

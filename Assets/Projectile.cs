@@ -12,6 +12,7 @@ public class Projectile : NetworkBehaviour {
   public void Init(NetworkBehaviourId sourceId) {
     source = sourceId;
     life = TickTimer.CreateFromSeconds(Runner, lifeTime);
+    Object.ReleaseStateAuthority();
   }
 
   public override void FixedUpdateNetwork() {
