@@ -55,4 +55,8 @@ public class PersistencyManager : MonoBehaviour {
   public static void save(Data data) {
     PlayerPrefs.SetString("data", JsonUtility.ToJson(data));
   }
+
+  public static void clear() {
+    PlayerPrefs.DeleteKey("data");
+  }
 }

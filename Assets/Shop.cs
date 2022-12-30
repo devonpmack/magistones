@@ -51,6 +51,10 @@ public class Shop : MonoBehaviour {
     save();
   }
 
+  public void reset() {
+    PersistencyManager.clear();
+    UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+  }
 
   public void purchase(Transform shopItem, string abilityName) {
     if (money <= 0)
