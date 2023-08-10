@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 448.7102, y: 38.694153}
+  m_CellSize: {x: 395.02478, y: 51.702576}
   m_Spacing: {x: 6, y: 6}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -6680,8 +6680,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RunnerPrefab: {fileID: 1961291005}
-  StartMode: 0
-  AutoStartAs: 1
+  StartMode: 1
+  AutoStartAs: 2
   AutoHideGUI: 1
   AutoClients: 1
   ServerPort: 27015
