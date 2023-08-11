@@ -6,7 +6,7 @@ using UnityEngine;
 public class Wizard : NetworkBehaviour
 {
 
-  [Networked] public int Damage { get; set; }
+  [Networked] public float Damage { get; set; }
   [Networked] public TickTimer stun_remaining { get; set; }
 
   public Ability[] abilities;

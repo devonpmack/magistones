@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 8358015882023670600}
   - component: {fileID: 7291690687864886413}
   - component: {fileID: -7655463980351433282}
+  - component: {fileID: -7048985291334555846}
   - component: {fileID: 5678799191990199410}
   - component: {fileID: 3962255863710167714}
   - component: {fileID: 4763336514218759031}
@@ -602,6 +603,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8815895893571785557}
   - {fileID: -7655463980351433282}
+  - {fileID: -7048985291334555846}
   - {fileID: 5678799191990199410}
   - {fileID: 3962255863710167714}
   - {fileID: 4763336514218759031}
@@ -693,6 +695,19 @@ MonoBehaviour:
   rotationSpeed: 15
   _IsGrounded: 0
   _Velocity: {x: 0, y: 0, z: 0}
+--- !u!114 &-7048985291334555846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ec506c83604d43479edc3da20140636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!114 &5678799191990199410
 MonoBehaviour:
   m_ObjectHideFlags: 0
