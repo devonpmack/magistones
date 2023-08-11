@@ -8,63 +8,78 @@ using UnityEngine;
 /// A simple example of Fusion input collection. This component should be on the same GameObject as the <see cref="NetworkRunner"/>.
 /// </summary>
 [ScriptHelp(BackColor = EditorHeaderBackColor.Steel)]
-public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks {
+public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
+{
 
-  public void OnInput(NetworkRunner runner, NetworkInput input) {
+  public void OnInput(NetworkRunner runner, NetworkInput input)
+  {
     var frameworkInput = new NetworkInputPrototype();
 
-    if (Input.GetKey(KeyCode.W)) {
+    if (Input.GetKey(KeyCode.W))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_FORWARD, true);
     }
 
-    if (Input.GetKey(KeyCode.S)) {
+    if (Input.GetKey(KeyCode.S))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_BACKWARD, true);
     }
 
-    if (Input.GetKey(KeyCode.A)) {
+    if (Input.GetKey(KeyCode.A))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_LEFT, true);
     }
 
-    if (Input.GetKey(KeyCode.D)) {
+    if (Input.GetKey(KeyCode.D))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_RIGHT, true);
     }
 
-    if (Input.GetKey(KeyCode.E)) {
+    if (Input.GetKey(KeyCode.E))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_ACTION1, true);
     }
 
-    if (Input.GetKey(KeyCode.Q)) {
+    if (Input.GetKey(KeyCode.Q))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_ACTION2, true);
     }
 
-    if (Input.GetKey(KeyCode.F)) {
+    if (Input.GetKey(KeyCode.F))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_ACTION3, true);
     }
 
-    if (Input.GetKey(KeyCode.G)) {
+    if (Input.GetKey(KeyCode.G))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_ACTION4, true);
     }
 
-    if (Input.GetKey(KeyCode.R)) {
+    if (Input.GetKey(KeyCode.R))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_RELOAD, true);
     }
 
 
     /* USED */
 
-    if (Input.GetMouseButton(0)) {
+    if (Input.GetMouseButton(0))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_PRIMARY, true);
     }
 
-    if (Input.GetMouseButton(1)) {
+    if (Input.GetMouseButton(1))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_SECONDARY, true);
     }
 
-    if (Input.GetKey(KeyCode.LeftShift)) {
+    if (Input.GetKey(KeyCode.LeftShift))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_TERTIARY, true);
     }
 
-    if (Input.GetKey(KeyCode.Space)) {
+    if (Input.GetKey(KeyCode.Space))
+    {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_QUATERNARY, true);
     }
 
@@ -72,7 +87,8 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
     Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
     float rayLength;
 
-    if (groundPlane.Raycast(cameraRay, out rayLength)) {
+    if (groundPlane.Raycast(cameraRay, out rayLength))
+    {
       Vector3 pointToLook = cameraRay.GetPoint(rayLength);
       Debug.DrawLine(cameraRay.origin, pointToLook, Color.cyan);
 
@@ -88,27 +104,35 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
   public void OnConnectedToServer(NetworkRunner runner) { }
   public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
   public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
-  public void OnDisconnectedFromServer(NetworkRunner runner) { }
-  public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) {
+  public void OnDisconnectedFromServer(NetworkRunner runner)
+  {
+  }
+  public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+  {
   }
   public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
   public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
   public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
   public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
-  public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) {
+  public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
+  {
   }
 
-  public void OnSceneLoadDone(NetworkRunner runner) {
+  public void OnSceneLoadDone(NetworkRunner runner)
+  {
 
   }
 
-  public void OnSceneLoadStart(NetworkRunner runner) {
+  public void OnSceneLoadStart(NetworkRunner runner)
+  {
   }
 
-  public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) {
+  public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+  {
   }
 
-  public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) {
+  public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+  {
 
   }
 }
@@ -116,7 +140,8 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
 /// <summary>
 /// Example definition of an INetworkStruct.
 /// </summary>
-public struct NetworkInputPrototype : INetworkInput {
+public struct NetworkInputPrototype : INetworkInput
+{
 
   public const int BUTTON_USE = 0;
 
@@ -146,11 +171,13 @@ public struct NetworkInputPrototype : INetworkInput {
   public float mouse_x;
   public float mouse_z;
 
-  public bool IsUp(int button) {
+  public bool IsUp(int button)
+  {
     return Buttons.IsSet(button) == false;
   }
 
-  public bool IsDown(int button) {
+  public bool IsDown(int button)
+  {
     return Buttons.IsSet(button);
   }
 }
