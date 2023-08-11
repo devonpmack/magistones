@@ -37,6 +37,8 @@ public class Projectile : NetworkBehaviour
       if (!player.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds))
         continue;
 
+      if (Object == null || !Object.IsValid) return;
+
       if (player.GetComponent<NetworkObject>().InputAuthority != source)
       {
         Wizard wiz = player.GetComponent<Wizard>();
