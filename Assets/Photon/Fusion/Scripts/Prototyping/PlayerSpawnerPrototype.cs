@@ -32,12 +32,6 @@ public class PlayerSpawnerPrototype : SpawnerPrototype<PlayerSpawnPointPrototype
   {
     Debug.Log($"Player {player} joined with object {playerObject}");
 
-
-    CinemachineVirtualCamera cam = FindObjectOfType<CinemachineVirtualCamera>();
-
-    cam.Follow = playerObject.transform;
-    cam.LookAt = playerObject.transform;
-
     base.RegisterPlayerAndObject(player, playerObject);
 
     Runner.SetPlayerObject(player, playerObject);

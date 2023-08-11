@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Cinemachine;
 using Fusion;
 using UnityEngine;
 
@@ -47,6 +48,14 @@ public class Wizard : NetworkBehaviour
 
   public override void Spawned()
   {
+    if (HasInputAuthority)
+    {
+      CinemachineVirtualCamera cam = FindObjectOfType<CinemachineVirtualCamera>();
+
+      cam.Follow = transform;
+      cam.LookAt = transform;
+    }
+
     abilities = new Ability[4];
 
     // gets called each time someone joins, won't work
