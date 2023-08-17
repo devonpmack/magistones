@@ -101,13 +101,20 @@ public class PersistencyManager : MonoBehaviour
 
   public static void save(Data data)
   {
-    if (IsClone()) return;
+    if (IsClone())
+    {
 
+      Debug.Log("Not saving because clone");
+      return;
+    }
+
+    Debug.Log("Save: " + JsonUtility.ToJson(data));
     PlayerPrefs.SetString("data", JsonUtility.ToJson(data));
   }
 
   public static void Clear()
   {
+    Debug.Log("Clearing data? !");
     PlayerPrefs.DeleteKey("data");
   }
 }

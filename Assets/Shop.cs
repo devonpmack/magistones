@@ -187,7 +187,9 @@ public class Shop : MonoBehaviour
   public void save()
   {
 
-    PersistencyManager.Data data = new PersistencyManager.Data(money);
+    PersistencyManager.Data data = PersistencyManager.load();
+    data.money = money;
+    data.ownedAbilities = new List<PersistencyManager.Data.OwnedAbility>();
 
     foreach (OwnedAbility ownedAbility in ownedAbilities)
     {
@@ -222,31 +224,6 @@ public class Shop : MonoBehaviour
     var data = PersistencyManager.load();
     money = data.money;
 
-    if (data.shop == null || data.rollOnLoad)
-    {
-      data.rollOnLoad = false;
-      Roll(true);
-    }
-    else
-    {
-      inShop = data.shop;
-
-      foreach (string abilityName in inShop)
-      {
-        var shopItem = Instantiate(shopItemTemplate, container);
-        var ability = AbilityMeta.get(abilityName);
-
-        Button buttonCtrl = shopItem.GetComponent<Button>();
-        buttonCtrl.onClick.AddListener(() =>
-        {
-          purchase(shopItem.transform, ability.name);
-        });
-
-        OwnedAbilitySetup(shopItem, 0, ability);
-        shopItem.GetComponent<Draggable>().isDraggable = false;
-      }
-    }
-
     foreach (PersistencyManager.Data.OwnedAbility ownedAbility in data.ownedAbilities)
     {
       if (ownedAbility.abilityName == "None")
@@ -271,6 +248,31 @@ public class Shop : MonoBehaviour
       });
 
       OwnedAbilitySetup(shopItem, ownedAbility.level, ability);
+    }
+
+    if (data.shop == null || data.rollOnLoad)
+    {
+      data.rollOnLoad = false;
+      Roll(true);
+    }
+    else
+    {
+      inShop = data.shop;
+
+      foreach (string abilityName in inShop)
+      {
+        var shopItem = Instantiate(shopItemTemplate, container);
+        var ability = AbilityMeta.get(abilityName);
+
+        Button buttonCtrl = shopItem.GetComponent<Button>();
+        buttonCtrl.onClick.AddListener(() =>
+        {
+          purchase(shopItem.transform, ability.name);
+        });
+
+        OwnedAbilitySetup(shopItem, 0, ability);
+        shopItem.GetComponent<Draggable>().isDraggable = false;
+      }
     }
   }
 

@@ -66,7 +66,7 @@
         "ConnectionPingInterval": 1.0,
         "ConnectionShutdownTime": 1.0,
         "MtuDefault": 1136,
-        "ReliableDataTransferModes": 3
+        "ReliableDataTransferModes": 0
     },
     "NetworkConditions": {
         "Enabled": false,

@@ -59,12 +59,13 @@ public class WizardHealthManager : NetworkBehaviour
             }
           }
 
+          // lose life
+          PersistencyManager.LoseLifeAndSave();
+
           var network = GameObject.FindGameObjectWithTag("Network");
           var networkManager = network.GetComponent<NetworkDebugStart>();
           networkManager.ShutdownAll();
 
-          // lose life
-          PersistencyManager.LoseLifeAndSave();
           Shop.GoToShop();
         }
       }
