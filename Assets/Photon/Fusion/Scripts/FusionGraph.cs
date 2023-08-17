@@ -499,33 +499,26 @@ public class FusionGraph : FusionGraphBase
 
   void UpdateIntermittentTime(ref IStatsBuffer data)
   {
-    try
+    var min = float.MaxValue;
+    var max = float.MinValue;
+    var sum = 0f;
+    var last = 0f;
+
+    for (int i = 0; i < data.Count; ++i)
     {
-      var min = float.MaxValue;
-      var max = float.MinValue;
-      var sum = 0f;
-      var last = 0f;
+      var v = (float)(StatSourceInfo.Multiplier * data.GetSampleAtIndex(i).FloatValue);
 
-      for (int i = 0; i < data.Count; ++i)
-      {
-        var v = (float)(StatSourceInfo.Multiplier * data.GetSampleAtIndex(i).FloatValue);
+      min = Math.Min(v, min);
+      max = Math.Max(v, max);
 
-        min = Math.Min(v, min);
-        max = Math.Max(v, max);
+      _values[i] = last = v;
 
-        _values[i] = last = v;
-
-        sum += v;
-      }
-      var avg = GetIntermittentAverageInfo(ref data, sum);
-
-      ApplyScaling(ref min, ref max);
-      UpdateUiText(min, max, avg, last);
+      sum += v;
     }
-    catch
-    {
-      Destroy(gameObject);
-    }
+    var avg = GetIntermittentAverageInfo(ref data, sum);
+
+    ApplyScaling(ref min, ref max);
+    UpdateUiText(min, max, avg, last);
   }
 
 

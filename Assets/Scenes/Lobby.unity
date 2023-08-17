@@ -3877,7 +3877,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 506979885}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: roll
+        m_MethodName: Roll
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

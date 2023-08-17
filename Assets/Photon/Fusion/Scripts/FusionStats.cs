@@ -18,24 +18,28 @@ using UnityEditor;
 /// </summary>
 [ScriptHelp(BackColor = EditorHeaderBackColor.Olive)]
 [ExecuteAlways]
-public class FusionStats : Fusion.Behaviour {
+public class FusionStats : Fusion.Behaviour
+{
 
 #if UNITY_EDITOR
 
   [MenuItem("Fusion/Add Fusion Stats", false, 1000)]
   [MenuItem("GameObject/Fusion/Add Fusion Stats")]
-  public static void AddFusionStatsToScene() {
+  public static void AddFusionStatsToScene()
+  {
 
     var selected = Selection.activeGameObject;
 
-    if (selected && PrefabUtility.IsPartOfPrefabAsset(selected)) {
+    if (selected && PrefabUtility.IsPartOfPrefabAsset(selected))
+    {
       Debug.LogWarning("Open prefabs before running 'Add Fusion Stats' on them.");
       return;
     }
 
     var fs = new GameObject("FusionStats");
 
-    if (selected) {
+    if (selected)
+    {
       fs.transform.SetParent(Selection.activeGameObject.transform);
     }
 
@@ -54,7 +58,8 @@ public class FusionStats : Fusion.Behaviour {
   /// <summary>
   /// Options for displaying stats as screen overlays or world GameObjects.
   /// </summary>
-  public enum StatCanvasTypes {
+  public enum StatCanvasTypes
+  {
     Overlay,
     GameObject,
   }
@@ -62,7 +67,8 @@ public class FusionStats : Fusion.Behaviour {
   /// <summary>
   /// Predefined layout default options.
   /// </summary>
-  public enum DefaultLayouts {
+  public enum DefaultLayouts
+  {
     Custom,
     Left,
     Right,
@@ -79,7 +85,8 @@ public class FusionStats : Fusion.Behaviour {
   static Dictionary<string, FusionStats> _activeGuids = new Dictionary<string, FusionStats>();
 
   // Added to make calling by reflection cleaner internally. Used in RunnerVisibilityControls.
-  internal static FusionStats CreateInternal(NetworkRunner runner = null, DefaultLayouts layout = DefaultLayouts.Left, Stats.NetStatFlags? netStatsMask = null, Stats.SimStatFlags? simStatsMask = null) {
+  internal static FusionStats CreateInternal(NetworkRunner runner = null, DefaultLayouts layout = DefaultLayouts.Left, Stats.NetStatFlags? netStatsMask = null, Stats.SimStatFlags? simStatsMask = null)
+  {
     return Create(null, runner, layout, layout, netStatsMask, simStatsMask);
   }
 
@@ -92,11 +99,13 @@ public class FusionStats : Fusion.Behaviour {
   /// <param name="netStatsMask">The network stats to be enabled. If left null, default statistics will be used.</param>
   /// <param name="simStatsMask">The simulation stats to be enabled. If left null, default statistics will be used.</param>
   /// <returns></returns>
-  public static FusionStats Create(Transform parent = null, NetworkRunner runner = null, DefaultLayouts? screenLayout = null, DefaultLayouts? objectLayout = null, Stats.NetStatFlags? netStatsMask = null, Stats.SimStatFlags? simStatsMask = null) {
+  public static FusionStats Create(Transform parent = null, NetworkRunner runner = null, DefaultLayouts? screenLayout = null, DefaultLayouts? objectLayout = null, Stats.NetStatFlags? netStatsMask = null, Stats.SimStatFlags? simStatsMask = null)
+  {
 
     var go = new GameObject($"{nameof(FusionStats)} {(runner ? runner.name : "null")}");
     FusionStats stats;
-    if (parent) {
+    if (parent)
+    {
       go.transform.SetParent(parent);
     }
 
@@ -106,14 +115,16 @@ public class FusionStats : Fusion.Behaviour {
 
     stats.Runner = runner;
 
-    if (runner != null) {
+    if (runner != null)
+    {
       stats.AutoDestroy = true;
     }
     return stats;
   }
 
   [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-  static void ResetStatics() {
+  static void ResetStatics()
+  {
     _statsForRunnerLookup.Clear();
     _activeGuids.Clear();
     _newInputSystemFound = null;
@@ -129,7 +140,7 @@ public class FusionStats : Fusion.Behaviour {
 #else
   public const Stats.SimStatFlags DefaultSimStatsMask =
     Stats.SimStatFlags.ForwardSimCount |
-    Stats.SimStatFlags.ResimCount      |
+    Stats.SimStatFlags.ResimCount |
     Stats.SimStatFlags.PacketSize;
 #endif
 
@@ -159,11 +170,11 @@ public class FusionStats : Fusion.Behaviour {
 
   // Used by DrawIfAttribute to determine inspector visibility of fields are runtime.
   bool ShowColorControls => !Application.isPlaying && _modifyColors;
-  bool IsNotPlaying      => !Application.isPlaying;
+  bool IsNotPlaying => !Application.isPlaying;
 
 
   /// <summary>
-  /// Interval (in seconds) between Graph redraws. Higher values (longer intervals) reduce CPU overhead, draw calls and garbage collection. 
+  /// Interval (in seconds) between Graph redraws. Higher values (longer intervals) reduce CPU overhead, draw calls and garbage collection.
   /// </summary>
   [InlineHelp]
   [Unit(Units.Seconds, 1f, 0f, DecimalPlaces = 2)]
@@ -182,9 +193,11 @@ public class FusionStats : Fusion.Behaviour {
   /// <summary>
   /// Selects between displaying Canvas as screen overlay, or a world GameObject.
   /// </summary>
-  public StatCanvasTypes CanvasType {
+  public StatCanvasTypes CanvasType
+  {
     get => _canvasType;
-    set {
+    set
+    {
       _canvasType = value;
       //_canvas.enabled = false;
       DirtyLayout(2);
@@ -200,9 +213,11 @@ public class FusionStats : Fusion.Behaviour {
   /// <summary>
   /// Enables text labels for the control buttons.
   /// </summary>
-  public bool ShowButtonLabels {
+  public bool ShowButtonLabels
+  {
     get => _showButtonLabels;
-    set {
+    set
+    {
       _showButtonLabels = value;
       DirtyLayout();
     }
@@ -220,9 +235,11 @@ public class FusionStats : Fusion.Behaviour {
   /// <summary>
   /// Height of button region at top of the stats panel. Values less than or equal to 0 hide the buttons, and reduce the header size.
   /// </summary>
-  public int MaxHeaderHeight {
+  public int MaxHeaderHeight
+  {
     get => _maxHeaderHeight;
-    set {
+    set
+    {
       _maxHeaderHeight = value;
       DirtyLayout();
     }
@@ -255,9 +272,11 @@ public class FusionStats : Fusion.Behaviour {
   [NormalizedRect(aspectRatio: 1)]
   [MultiPropertyDrawersFix]
   Rect _gameObjectRect = new Rect(0.0f, 0.0f, 0.3f, 1.0f);
-  public Rect GameObjectRect {
+  public Rect GameObjectRect
+  {
     get => _gameObjectRect;
-    set {
+    set
+    {
       _gameObjectRect = value;
       DirtyLayout();
     }
@@ -274,9 +293,11 @@ public class FusionStats : Fusion.Behaviour {
   [NormalizedRect]
   [MultiPropertyDrawersFix]
   Rect _overlayRect = new Rect(0.0f, 0.0f, 0.3f, 1.0f);
-  public Rect OverlayRect {
+  public Rect OverlayRect
+  {
     get => _overlayRect;
-    set {
+    set
+    {
       _overlayRect = value;
       DirtyLayout();
     }
@@ -290,16 +311,18 @@ public class FusionStats : Fusion.Behaviour {
   [InlineHelp]
   [SerializeField]
   FusionGraph.Layouts _defaultLayout;
-  public FusionGraph.Layouts DefaultLayout {
+  public FusionGraph.Layouts DefaultLayout
+  {
     get => _defaultLayout;
-    set {
+    set
+    {
       _defaultLayout = value;
       DirtyLayout();
     }
   }
 
   /// <summary>
-  /// UI Text on FusionGraphs can only overlay the bar graph if the canvas is perfectly facing the camera. 
+  /// UI Text on FusionGraphs can only overlay the bar graph if the canvas is perfectly facing the camera.
   /// Any other angles will result in ZBuffer fighting between the text and the graph bar shader.
   /// For uses where perfect camera billboarding is not possible (such as VR), this toggle prevents FusionGraph layouts being used where text and graphs overlap.
   /// Normally leave this unchecked, unless you are experiencing corrupted text rendering.
@@ -307,9 +330,11 @@ public class FusionStats : Fusion.Behaviour {
   [InlineHelp]
   [SerializeField]
   bool _noTextOverlap;
-  public bool NoTextOverlap {
+  public bool NoTextOverlap
+  {
     get => _noTextOverlap;
-    set {
+    set
+    {
       _noTextOverlap = value;
       DirtyLayout();
     }
@@ -322,9 +347,11 @@ public class FusionStats : Fusion.Behaviour {
   [InlineHelp]
   [SerializeField]
   bool _noGraphShader;
-  public bool NoGraphShader {
+  public bool NoGraphShader
+  {
     get => _noGraphShader;
-    set {
+    set
+    {
       _noGraphShader = value;
       DirtyLayout();
     }
@@ -351,9 +378,11 @@ public class FusionStats : Fusion.Behaviour {
   /// <summary>
   /// If <see cref="GraphColumnCount"/> is set to zero, then columns will automatically be added as needed to limit graphs to this width or less.
   /// </summary>
-  public int GraphMaxWidth {
+  public int GraphMaxWidth
+  {
     get => _graphMaxWidth;
-    set {
+    set
+    {
       _graphMaxWidth = value;
       DirtyLayout();
     }
@@ -367,15 +396,18 @@ public class FusionStats : Fusion.Behaviour {
   [SerializeField]
   [WarnIf(nameof(ShowMissingNetObjWarning), "No NetworkObject found on this GameObject, nor parent. Object stats will be unavailable.")]
   bool _enableObjectStats;
-  public bool EnableObjectStats {
+  public bool EnableObjectStats
+  {
     get => _enableObjectStats;
-    set {
+    set
+    {
       _enableObjectStats = value;
       DirtyLayout();
     }
   }
 
-  bool ShowMissingNetObjWarning {
+  bool ShowMissingNetObjWarning
+  {
     get => _enableObjectStats && this.Object == null;
   }
 
@@ -386,9 +418,12 @@ public class FusionStats : Fusion.Behaviour {
   [SerializeField]
   [DrawIf(nameof(EnableObjectStats))]
   NetworkObject _object;
-  public NetworkObject Object {
-    get {
-      if (_object == null) {
+  public NetworkObject Object
+  {
+    get
+    {
+      if (_object == null)
+      {
         _object = GetComponentInParent<NetworkObject>();
       }
       return _object;
@@ -404,9 +439,11 @@ public class FusionStats : Fusion.Behaviour {
   [Range(0, 200)]
   [MultiPropertyDrawersFix]
   int _objectTitleHeight = 48;
-  public int ObjectTitleHeight {
+  public int ObjectTitleHeight
+  {
     get => _objectTitleHeight;
-    set {
+    set
+    {
       _objectTitleHeight = value;
       DirtyLayout();
     }
@@ -421,9 +458,11 @@ public class FusionStats : Fusion.Behaviour {
   [Range(0, 200)]
   [MultiPropertyDrawersFix]
   int _objectIdsHeight = 60;
-  public int ObjectIdsHeight {
+  public int ObjectIdsHeight
+  {
     get => _objectIdsHeight;
-    set {
+    set
+    {
       _objectIdsHeight = value;
       DirtyLayout();
     }
@@ -438,9 +477,11 @@ public class FusionStats : Fusion.Behaviour {
   [Range(0, 200)]
   [MultiPropertyDrawersFix]
   int _objectMetersHeight = 90;
-  public int ObjectMetersHeight {
+  public int ObjectMetersHeight
+  {
     get => _objectMetersHeight;
-    set {
+    set
+    {
       _objectIdsHeight = value;
       DirtyLayout();
     }
@@ -455,26 +496,35 @@ public class FusionStats : Fusion.Behaviour {
   [EditorDisabled]
   [MultiPropertyDrawersFix]
   NetworkRunner _runner;
-  public NetworkRunner Runner {
-    get {
+  public NetworkRunner Runner
+  {
+    get
+    {
 
-      if (Application.isPlaying == false) {
+      if (Application.isPlaying == false)
+      {
         return null;
       }
 
       // If the current runner shutdown, reset the runner so a new one can be found
-      if (_runner) {
-        if (_runner.IsShutdown) {
+      if (_runner)
+      {
+        if (_runner.IsShutdown)
+        {
           Runner = null;
-        } else {
+        }
+        else
+        {
           return _runner;
         }
       }
 
-      if (Object) {
+      if (Object)
+      {
         var runner = _object.Runner;
-        
-        if (runner && (!EnforceSingle || (runner.Mode & ConnectTo) != 0)) {
+
+        if (runner && (!EnforceSingle || (runner.Mode & ConnectTo) != 0))
+        {
           Runner = runner;
           return _runner;
         }
@@ -485,8 +535,10 @@ public class FusionStats : Fusion.Behaviour {
       Runner = found;
       return found;
     }
-    set {
-      if (_runner == value) {
+    set
+    {
+      if (_runner == value)
+      {
         return;
       }
       // Keep track of which runners have active stats windows - needed so pause/unpause can affect all (since pause affects other panels)
@@ -499,7 +551,7 @@ public class FusionStats : Fusion.Behaviour {
   }
 
   /// <summary>
-  /// Initializes a <see cref="FusionGraph"/> for all available stats, even if not initially included. 
+  /// Initializes a <see cref="FusionGraph"/> for all available stats, even if not initially included.
   /// If disabled, graphs added after initialization will be added to the bottom of the interface stack.
   /// </summary>
   [InlineHelp]
@@ -522,9 +574,11 @@ public class FusionStats : Fusion.Behaviour {
   [DrawIf(nameof(EnableObjectStats))]
   [MultiPropertyDrawersFix]
   Stats.ObjStatFlags _includedObjStats;
-  public Stats.ObjStatFlags IncludedObjectStats {
+  public Stats.ObjStatFlags IncludedObjectStats
+  {
     get => _includedObjStats;
-    set {
+    set
+    {
       _includedObjStats = value;
       _activeDirty = true;
     }
@@ -538,9 +592,11 @@ public class FusionStats : Fusion.Behaviour {
   [VersaMask]
   [MultiPropertyDrawersFix]
   Stats.NetStatFlags _includedNetStats;
-  public Stats.NetStatFlags IncludedNetStats {
+  public Stats.NetStatFlags IncludedNetStats
+  {
     get => _includedNetStats;
-    set {
+    set
+    {
       _includedNetStats = value;
       _activeDirty = true;
     }
@@ -554,9 +610,11 @@ public class FusionStats : Fusion.Behaviour {
   [VersaMask]
   [MultiPropertyDrawersFix]
   Stats.SimStatFlags _includedSimStats;
-  public Stats.SimStatFlags IncludedSimStats {
+  public Stats.SimStatFlags IncludedSimStats
+  {
     get => _includedSimStats;
-    set {
+    set
+    {
       _includedSimStats = value;
       _activeDirty = true;
     }
@@ -579,7 +637,7 @@ public class FusionStats : Fusion.Behaviour {
   public bool EnforceSingle = true;
 
   /// <summary>
-  /// Identifier used to enforce single instances of <see cref="FusionStats"/> when running in Multi-Peer mode. 
+  /// Identifier used to enforce single instances of <see cref="FusionStats"/> when running in Multi-Peer mode.
   /// When <see cref="EnforceSingle"/> is enabled, only one instance of <see cref="FusionStats"/> with this GUID will be active at any time,
   /// regardless of the total number of peers running.
   /// </summary>
@@ -657,72 +715,75 @@ public class FusionStats : Fusion.Behaviour {
   Color _objDataBackColor = new Color(0.0f, 0.2f, 0.4f, 1.0f);
 
   // IFusionStats interface requirements
-  public Color FontColor        => _fontColor;
-  public Color GraphColorGood   => _graphColorGood;
-  public Color GraphColorWarn   => _graphColorWarn;
-  public Color GraphColorBad    => _graphColorBad;
-  public Color GraphColorFlag    => _graphColorFlag;
+  public Color FontColor => _fontColor;
+  public Color GraphColorGood => _graphColorGood;
+  public Color GraphColorWarn => _graphColorWarn;
+  public Color GraphColorBad => _graphColorBad;
+  public Color GraphColorFlag => _graphColorFlag;
   public Color SimDataBackColor => _simDataBackColor;
   public Color NetDataBackColor => _netDataBackColor;
   public Color ObjDataBackColor => _objDataBackColor;
 
   //[Header("Graph Connections")]
-  [SerializeField] [HideInInspector] FusionGraph[] _simGraphs;
-  [SerializeField] [HideInInspector] FusionGraph[] _objGraphs;
-  [SerializeField] [HideInInspector] FusionGraph[] _netGraphs;
+  [SerializeField][HideInInspector] FusionGraph[] _simGraphs;
+  [SerializeField][HideInInspector] FusionGraph[] _objGraphs;
+  [SerializeField][HideInInspector] FusionGraph[] _netGraphs;
   [NonSerialized] List<IFusionStatsView> _foundViews;
   [NonSerialized] List<FusionGraph> _foundGraphs;
 
-  [SerializeField] [HideInInspector] UI.Text _titleText;
+  [SerializeField][HideInInspector] UI.Text _titleText;
 
-  [SerializeField] [HideInInspector] UI.Text _clearIcon;
-  [SerializeField] [HideInInspector] UI.Text _pauseIcon;
-  [SerializeField] [HideInInspector] UI.Text _togglIcon;
-  [SerializeField] [HideInInspector] UI.Text _closeIcon;
-  [SerializeField] [HideInInspector] UI.Text _canvsIcon;
+  [SerializeField][HideInInspector] UI.Text _clearIcon;
+  [SerializeField][HideInInspector] UI.Text _pauseIcon;
+  [SerializeField][HideInInspector] UI.Text _togglIcon;
+  [SerializeField][HideInInspector] UI.Text _closeIcon;
+  [SerializeField][HideInInspector] UI.Text _canvsIcon;
 
-  [SerializeField] [HideInInspector] UI.Text _clearLabel;
-  [SerializeField] [HideInInspector] UI.Text _pauseLabel;
-  [SerializeField] [HideInInspector] UI.Text _togglLabel;
-  [SerializeField] [HideInInspector] UI.Text _closeLabel;
-  [SerializeField] [HideInInspector] UI.Text _canvsLabel;
-  [SerializeField] [HideInInspector] UI.Text _objectNameText;
+  [SerializeField][HideInInspector] UI.Text _clearLabel;
+  [SerializeField][HideInInspector] UI.Text _pauseLabel;
+  [SerializeField][HideInInspector] UI.Text _togglLabel;
+  [SerializeField][HideInInspector] UI.Text _closeLabel;
+  [SerializeField][HideInInspector] UI.Text _canvsLabel;
+  [SerializeField][HideInInspector] UI.Text _objectNameText;
 
-  [SerializeField] [HideInInspector] UI.GridLayoutGroup _graphGridLayoutGroup;
+  [SerializeField][HideInInspector] UI.GridLayoutGroup _graphGridLayoutGroup;
 
-  [SerializeField] [HideInInspector] Canvas _canvas;
-  [SerializeField] [HideInInspector] RectTransform _canvasRT;
-  [SerializeField] [HideInInspector] RectTransform _rootPanelRT;
-  [SerializeField] [HideInInspector] RectTransform _guidesRT;
-  [SerializeField] [HideInInspector] RectTransform _headerRT;
-  [SerializeField] [HideInInspector] RectTransform _statsPanelRT;
-  [SerializeField] [HideInInspector] RectTransform _graphsLayoutRT;
-  [SerializeField] [HideInInspector] RectTransform _titleRT;
-  [SerializeField] [HideInInspector] RectTransform _buttonsRT;
-  [SerializeField] [HideInInspector] RectTransform _objectTitlePanelRT;
-  [SerializeField] [HideInInspector] RectTransform _objectIdsGroupRT;
-  [SerializeField] [HideInInspector] RectTransform _objectMetersPanelRT;
-  [SerializeField] [HideInInspector] RectTransform _clientIdPanelRT;
-  [SerializeField] [HideInInspector] RectTransform _authorityPanelRT;
+  [SerializeField][HideInInspector] Canvas _canvas;
+  [SerializeField][HideInInspector] RectTransform _canvasRT;
+  [SerializeField][HideInInspector] RectTransform _rootPanelRT;
+  [SerializeField][HideInInspector] RectTransform _guidesRT;
+  [SerializeField][HideInInspector] RectTransform _headerRT;
+  [SerializeField][HideInInspector] RectTransform _statsPanelRT;
+  [SerializeField][HideInInspector] RectTransform _graphsLayoutRT;
+  [SerializeField][HideInInspector] RectTransform _titleRT;
+  [SerializeField][HideInInspector] RectTransform _buttonsRT;
+  [SerializeField][HideInInspector] RectTransform _objectTitlePanelRT;
+  [SerializeField][HideInInspector] RectTransform _objectIdsGroupRT;
+  [SerializeField][HideInInspector] RectTransform _objectMetersPanelRT;
+  [SerializeField][HideInInspector] RectTransform _clientIdPanelRT;
+  [SerializeField][HideInInspector] RectTransform _authorityPanelRT;
 
-  [SerializeField] [HideInInspector] UI.Button _titleButton;
-  [SerializeField] [HideInInspector] UI.Button _objctButton;
-  [SerializeField] [HideInInspector] UI.Button _clearButton;
-  [SerializeField] [HideInInspector] UI.Button _togglButton;
-  [SerializeField] [HideInInspector] UI.Button _pauseButton;
-  [SerializeField] [HideInInspector] UI.Button _closeButton;
-  [SerializeField] [HideInInspector] UI.Button _canvsButton;
+  [SerializeField][HideInInspector] UI.Button _titleButton;
+  [SerializeField][HideInInspector] UI.Button _objctButton;
+  [SerializeField][HideInInspector] UI.Button _clearButton;
+  [SerializeField][HideInInspector] UI.Button _togglButton;
+  [SerializeField][HideInInspector] UI.Button _pauseButton;
+  [SerializeField][HideInInspector] UI.Button _closeButton;
+  [SerializeField][HideInInspector] UI.Button _canvsButton;
 
   public Rect CurrentRect => _canvasType == StatCanvasTypes.GameObject ? _gameObjectRect : _overlayRect;
 
-  void UpdateTitle() {
+  void UpdateTitle()
+  {
     var runnername = _runner ? _runner.name : "Disconnected";
-    if (_titleText) {
+    if (_titleText)
+    {
       _titleText.text = runnername;
     }
   }
 
-  Shader Shader {
+  Shader Shader
+  {
     get => Resources.Load<Shader>("FusionGraphShader");
   }
 
@@ -735,58 +796,71 @@ public class FusionStats : Fusion.Behaviour {
   double _currentDrawTime;
   double _delayDrawUntil;
 
-  void DirtyLayout(int minimumRefreshes = 1) {
-    if (_layoutDirty < minimumRefreshes) {
+  void DirtyLayout(int minimumRefreshes = 1)
+  {
+    if (_layoutDirty < minimumRefreshes)
+    {
       _layoutDirty = minimumRefreshes;
     }
   }
 
 #if UNITY_EDITOR
-  void OnValidate() {
+  void OnValidate()
+  {
 
-    if (EnforceSingle && Guid == "") {
+    if (EnforceSingle && Guid == "")
+    {
       Guid = System.Guid.NewGuid().ToString().Substring(0, 13);
     }
     _activeDirty = true;
-    if (_layoutDirty <= 0) {
+    if (_layoutDirty <= 0)
+    {
       _layoutDirty = 2;
 
       // Some aspects of Layout will throw warnings if run from OnValidate, so defer.
       // Stop deferring when entering play mode, as this will cause null errors (thanks unity).
-      if (Application.isPlaying) {
+      if (Application.isPlaying)
+      {
         UnityEditor.EditorApplication.delayCall += CalculateLayout;
-      } else {
+      }
+      else
+      {
         UnityEditor.EditorApplication.delayCall -= CalculateLayout;
       }
     }
   }
 
-  void Reset() {
+  void Reset()
+  {
     ResetInternal();
   }
 
 #endif
 
   void ResetInternal(
-    bool? enableObjectStats          = null, 
-    Stats.NetStatFlags? netStatsMask = null, 
+    bool? enableObjectStats = null,
+    Stats.NetStatFlags? netStatsMask = null,
     Stats.SimStatFlags? simStatsMask = null,
-    DefaultLayouts? objectLayout     = null,
-    DefaultLayouts? screenLayout     = null
-    ) {
+    DefaultLayouts? objectLayout = null,
+    DefaultLayouts? screenLayout = null
+    )
+  {
     // Destroy existing built graphs
     var canv = GetComponentInChildren<Canvas>();
-    if (canv) {
+    if (canv)
+    {
       DestroyImmediate(canv.gameObject);
     }
 
-    if (TryGetComponent<FusionStatsBillboard>(out var _) == false) {
+    if (TryGetComponent<FusionStatsBillboard>(out var _) == false)
+    {
       gameObject.AddComponent<FusionStatsBillboard>().UpdateLookAt();
     }
 
     bool hasNetworkObject = GetComponentInParent<NetworkObject>();
     // If attached to a NetObject
-    if (enableObjectStats.GetValueOrDefault() || (enableObjectStats.GetValueOrDefault(true) && hasNetworkObject)) {
+    if (enableObjectStats.GetValueOrDefault() || (enableObjectStats.GetValueOrDefault(true) && hasNetworkObject))
+    {
       EnableObjectStats = true;
       _includedObjStats = Stats.ObjStatFlags.Buffer;
       _includedSimStats = simStatsMask.GetValueOrDefault();
@@ -794,36 +868,41 @@ public class FusionStats : Fusion.Behaviour {
       _canvasType = StatCanvasTypes.GameObject;
       EnforceSingle = false;
       GraphColumnCount = 1;
-    } 
-    else {
+    }
+    else
+    {
       // If not attached to a GameObject (sim only)
 
       GraphColumnCount = 0;
 
-      if (transform.parent) {
+      if (transform.parent)
+      {
         _canvasType = StatCanvasTypes.GameObject;
         EnforceSingle = false;
-      } else {
+      }
+      else
+      {
         _canvasType = StatCanvasTypes.Overlay;
         EnforceSingle = true;
       }
       _includedSimStats = simStatsMask.GetValueOrDefault(DefaultSimStatsMask);
       _includedNetStats = netStatsMask.GetValueOrDefault(
-        Stats.NetStatFlags.RoundTripTime | 
-        Stats.NetStatFlags.SentPacketSizes | 
+        Stats.NetStatFlags.RoundTripTime |
+        Stats.NetStatFlags.SentPacketSizes |
         Stats.NetStatFlags.ReceivedPacketSizes);
 
     }
 
 
     ApplyDefaultLayout(objectLayout.GetValueOrDefault(hasNetworkObject ? DefaultLayouts.UpperRight : DefaultLayouts.Full), StatCanvasTypes.GameObject);
-    ApplyDefaultLayout(screenLayout.GetValueOrDefault(DefaultLayouts.Right),                                               StatCanvasTypes.Overlay);
+    ApplyDefaultLayout(screenLayout.GetValueOrDefault(DefaultLayouts.Right), StatCanvasTypes.Overlay);
 
     Guid = System.Guid.NewGuid().ToString().Substring(0, 13);
     GenerateGraphs();
   }
 
-  void Awake() {
+  void Awake()
+  {
 
 #if !UNITY_EDITOR
     if (_guidesRT) {
@@ -831,11 +910,14 @@ public class FusionStats : Fusion.Behaviour {
     }
 #endif
 
-    if (Application.isPlaying == false) {
+    if (Application.isPlaying == false)
+    {
 #if UNITY_EDITOR
-      if (_canvas) {
+      if (_canvas)
+      {
         //// Hide canvas for rebuild, Unity makes this ugly.
-        if (EditorApplication.isCompiling == false) {
+        if (EditorApplication.isCompiling == false)
+        {
           //_canvas.enabled = false;
           UnityEditor.EditorApplication.delayCall += CalculateLayout;
 
@@ -846,31 +928,39 @@ public class FusionStats : Fusion.Behaviour {
       return;
 #endif
 
-    } else {
+    }
+    else
+    {
       _foundViews = new List<IFusionStatsView>();
       GetComponentsInChildren(true, _foundViews);
 
     }
 
-    if (Guid == "") {
+    if (Guid == "")
+    {
       Guid = System.Guid.NewGuid().ToString().Substring(0, 13);
     }
 
-    if (EnforceSingle && Guid != null) {
-      if (_activeGuids.ContainsKey(Guid)) {
+    if (EnforceSingle && Guid != null)
+    {
+      if (_activeGuids.ContainsKey(Guid))
+      {
         Destroy(this.gameObject);
         return;
       }
       _activeGuids.Add(Guid, this);
     }
 
-    if (EnforceSingle && transform.parent == null && _canvasType == StatCanvasTypes.Overlay) {
+    if (EnforceSingle && transform.parent == null && _canvasType == StatCanvasTypes.Overlay)
+    {
       DontDestroyOnLoad(gameObject);
     }
   }
 
-  void Start() {
-    if (Application.isPlaying) {
+  void Start()
+  {
+    if (Application.isPlaying)
+    {
       Initialize();
       _activeDirty = true;
       _layoutDirty = 2;
@@ -879,14 +969,18 @@ public class FusionStats : Fusion.Behaviour {
     }
   }
 
-  void OnDestroy() {
+  void OnDestroy()
+  {
     // Try to unregister this Stats in case it hasn't already.
     DisassociateWithRunner(_runner);
 
     // If this is the current enforce single instance of this GUID, remove it from the record.
-    if (Guid != null) {
-      if (_activeGuids.TryGetValue(Guid, out var stats)) {
-        if (stats == this) {
+    if (Guid != null)
+    {
+      if (_activeGuids.TryGetValue(Guid, out var stats))
+      {
+        if (stats == this)
+        {
           _activeGuids.Remove(Guid);
         }
       }
@@ -894,23 +988,31 @@ public class FusionStats : Fusion.Behaviour {
   }
 
   [BehaviourButtonAction("Destroy Graphs", conditionMember: nameof(_canvasRT), ConditionFlags = BehaviourActionAttribute.ActionFlags.ShowAtNotRuntime)]
-  void DestroyGraphs() {
-    if (_canvasRT) {
+  void DestroyGraphs()
+  {
+    if (_canvasRT)
+    {
       DestroyImmediate(_canvasRT.gameObject);
     }
     _canvasRT = null;
   }
 
   static bool? _newInputSystemFound;
-  public static bool NewInputSystemFound {
-    
-    get {
-      if (_newInputSystemFound == null) {
+  public static bool NewInputSystemFound
+  {
 
-        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
+    get
+    {
+      if (_newInputSystemFound == null)
+      {
+
+        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+        {
           var asmtypes = asm.GetTypes();
-          foreach (var type in asmtypes) {
-            if (type.Namespace == "UnityEngine.InputSystem") {
+          foreach (var type in asmtypes)
+          {
+            if (type.Namespace == "UnityEngine.InputSystem")
+            {
               _newInputSystemFound = true;
               return true;
             }
@@ -923,20 +1025,26 @@ public class FusionStats : Fusion.Behaviour {
     }
   }
 
-  void Initialize() {
+  void Initialize()
+  {
 
     // Only add an event system if no active event systems exist.
-    if (Application.isPlaying) {
+    if (Application.isPlaying)
+    {
 
-      if (NewInputSystemFound) {
+      if (NewInputSystemFound)
+      {
         // New Input System
       }
-      else {
-        if (FindObjectOfType<EventSystem>() == null) {
+      else
+      {
+        if (FindObjectOfType<EventSystem>() == null)
+        {
           var eventSystemGO = new GameObject("Event System");
           eventSystemGO.AddComponent<EventSystem>();
           eventSystemGO.AddComponent<StandaloneInputModule>();
-          if (Application.isPlaying) {
+          if (Application.isPlaying)
+          {
             DontDestroyOnLoad(eventSystemGO);
           }
         }
@@ -944,12 +1052,14 @@ public class FusionStats : Fusion.Behaviour {
     }
 
 
-    if (_canvasRT == false) {
+    if (_canvasRT == false)
+    {
       GenerateGraphs();
     }
 
     // Already existed before runtime. (Scene object)
-    if (_canvasRT) {
+    if (_canvasRT)
+    {
       // Listener connections are not retained with serialization and always need to be connected at startup.
       // Remove listeners in case this is a copy of a runtime generated graph.
       _togglButton?.onClick.RemoveListener(Toggle);
@@ -971,7 +1081,8 @@ public class FusionStats : Fusion.Behaviour {
 
       GetComponentsInChildren(true, _foundViews);
 
-      foreach (var g in _foundViews) {
+      foreach (var g in _foundViews)
+      {
         g.Initialize();
       }
 
@@ -980,9 +1091,10 @@ public class FusionStats : Fusion.Behaviour {
   }
 
   bool _graphsAreMissing => _canvasRT == null;
-  
+
   [BehaviourButtonAction("Generate Graphs", conditionMember: nameof(_graphsAreMissing), ConditionFlags = BehaviourActionAttribute.ActionFlags.ShowAtNotRuntime)]
-  void GenerateGraphs() {
+  void GenerateGraphs()
+  {
     var rootRectTr = gameObject.GetComponent<Transform>();
     _canvasRT = rootRectTr.CreateRectTransform("Stats Canvas");
     _canvas = _canvasRT.gameObject.AddComponent<Canvas>();
@@ -990,7 +1102,8 @@ public class FusionStats : Fusion.Behaviour {
 
     // If the runner has already started, the root FusionStats has been added to the VisNodes registration for the runner,
     // But any generated children GOs here will not. Add the generated components to the visibility system.
-    if (Runner && Runner.IsRunning) {
+    if (Runner && Runner.IsRunning)
+    {
       RunnerVisibilityNode.AddVisibilityNodes(_canvasRT.gameObject, Runner);
     }
     var scaler = _canvasRT.gameObject.AddComponent<UI.CanvasScaler>();
@@ -1017,7 +1130,7 @@ public class FusionStats : Fusion.Behaviour {
       .SetOffsets(MARGIN, -MARGIN, 0.0f, -MARGIN);
 
     _titleButton = _titleRT.gameObject.AddComponent<UI.Button>();
-    _titleText   = _titleRT.AddText(_runner ? _runner.name : "Disconnected", TextAnchor.UpperCenter, _fontColor);
+    _titleText = _titleRT.AddText(_runner ? _runner.name : "Disconnected", TextAnchor.UpperCenter, _fontColor);
     _titleText.raycastTarget = true;
 
     // Buttons
@@ -1058,7 +1171,7 @@ public class FusionStats : Fusion.Behaviour {
       .CreateRectTransform("Object Name")
       .SetAnchors(0.0f, 1.0f, 0.15f, 0.85f)
       .SetOffsets(PAD, -PAD, 0, 0);
-    
+
     _objectNameText = objectTitleRT.AddText("Object Name", TextAnchor.MiddleCenter, _fontColor);
     _objectNameText.alignByGeometry = false;
     _objectNameText.raycastTarget = false;
@@ -1071,22 +1184,25 @@ public class FusionStats : Fusion.Behaviour {
       .AddVerticalLayoutGroup(MARGIN);
 
     FusionStatsMeterBar.Create(_objectMetersPanelRT, this, Stats.StatSourceTypes.NetworkObject, (int)Stats.ObjStats.Bandwidth, 15, 30);
-    FusionStatsMeterBar.Create(_objectMetersPanelRT, this, Stats.StatSourceTypes.NetworkObject, (int)Stats.ObjStats.RPC,       3,  6);
+    FusionStatsMeterBar.Create(_objectMetersPanelRT, this, Stats.StatSourceTypes.NetworkObject, (int)Stats.ObjStats.RPC, 3, 6);
 
     // Graphs
     _graphsLayoutRT = _statsPanelRT
       .CreateRectTransform("Graphs Layout")
       .ExpandAnchor()
-      .SetOffsets(MARGIN, 0,0,0);
+      .SetOffsets(MARGIN, 0, 0, 0);
 
     //.AddGridlLayoutGroup(MRGN);
     _graphGridLayoutGroup = _graphsLayoutRT.AddGridlLayoutGroup(MARGIN);
 
     _objGraphs = new FusionGraph[Stats.OBJ_STAT_TYPE_COUNT];
-    for (int i = 0; i < Stats.OBJ_STAT_TYPE_COUNT; ++i) {
-      if (InitializeAllGraphs == false) {
+    for (int i = 0; i < Stats.OBJ_STAT_TYPE_COUNT; ++i)
+    {
+      if (InitializeAllGraphs == false)
+      {
         var statFlag = (Stats.ObjStatFlags)(1 << i);
-        if ((statFlag & _includedObjStats) == 0) {
+        if ((statFlag & _includedObjStats) == 0)
+        {
           continue;
         }
       }
@@ -1094,10 +1210,13 @@ public class FusionStats : Fusion.Behaviour {
     }
 
     _netGraphs = new FusionGraph[Stats.NET_STAT_TYPE_COUNT];
-    for (int i = 0; i < Stats.NET_STAT_TYPE_COUNT; ++i) {
-      if (InitializeAllGraphs == false) {
+    for (int i = 0; i < Stats.NET_STAT_TYPE_COUNT; ++i)
+    {
+      if (InitializeAllGraphs == false)
+      {
         var statFlag = (Stats.NetStatFlags)(1 << i);
-        if ((statFlag & _includedNetStats) == 0) {
+        if ((statFlag & _includedNetStats) == 0)
+        {
           continue;
         }
       }
@@ -1105,10 +1224,13 @@ public class FusionStats : Fusion.Behaviour {
     }
 
     _simGraphs = new FusionGraph[Stats.SIM_STAT_TYPE_COUNT];
-    for (int i = 0; i < Stats.SIM_STAT_TYPE_COUNT; ++i) {
-      if (InitializeAllGraphs == false) {
+    for (int i = 0; i < Stats.SIM_STAT_TYPE_COUNT; ++i)
+    {
+      if (InitializeAllGraphs == false)
+      {
         var statFlag = (Stats.SimStatFlags)(1 << i);
-        if ((statFlag & _includedSimStats) == 0) {
+        if ((statFlag & _includedSimStats) == 0)
+        {
           continue;
         }
       }
@@ -1122,26 +1244,36 @@ public class FusionStats : Fusion.Behaviour {
     _layoutDirty = 2;
   }
 
-  void AssociateWithRunner(NetworkRunner runner) {
-    if (runner != null) {
-      if (_statsForRunnerLookup.TryGetValue(runner, out var runnerStats) == false) {
+  void AssociateWithRunner(NetworkRunner runner)
+  {
+    if (runner != null)
+    {
+      if (_statsForRunnerLookup.TryGetValue(runner, out var runnerStats) == false)
+      {
         _statsForRunnerLookup.Add(runner, new List<FusionStats>() { this });
-      } else {
+      }
+      else
+      {
         runnerStats.Add(this);
       }
     }
   }
 
-  void DisassociateWithRunner(NetworkRunner runner) {
-    if (runner != null && _statsForRunnerLookup.TryGetValue(runner, out var oldrunnerstats)) {
-      if (oldrunnerstats.Contains(this)) {
+  void DisassociateWithRunner(NetworkRunner runner)
+  {
+    if (runner != null && _statsForRunnerLookup.TryGetValue(runner, out var oldrunnerstats))
+    {
+      if (oldrunnerstats.Contains(this))
+      {
         oldrunnerstats.Remove(this);
       }
     }
   }
 
-  void Pause() {
-    if (_runner && _runner.Simulation != null) {
+  void Pause()
+  {
+    if (_runner && _runner.Simulation != null)
+    {
       _paused = !_paused;
 
       var icon = _paused ? PLAY_ICON : PAUS_ICON;
@@ -1150,11 +1282,14 @@ public class FusionStats : Fusion.Behaviour {
       _pauseLabel.text = label;
 
       // Pause for all SimStats tied to this runner if all related FusionStats are paused.
-      if (_statsForRunnerLookup.TryGetValue(_runner, out var stats)) {
+      if (_statsForRunnerLookup.TryGetValue(_runner, out var stats))
+      {
 
         bool statsAreBeingUsed = false;
-        foreach (var stat in stats) {
-          if (stat._paused == false) {
+        foreach (var stat in stats)
+        {
+          if (stat._paused == false)
+          {
             statsAreBeingUsed = true;
             break;
           }
@@ -1164,63 +1299,80 @@ public class FusionStats : Fusion.Behaviour {
     }
   }
 
-  void Toggle() {
+  void Toggle()
+  {
     _hidden = !_hidden;
 
-    _togglIcon.text  = _hidden ? SHOW_ICON : HIDE_ICON;
+    _togglIcon.text = _hidden ? SHOW_ICON : HIDE_ICON;
     _togglLabel.text = _hidden ? SHOW_TEXT : HIDE_TEXT;
 
     _statsPanelRT.gameObject.SetActive(!_hidden);
 
-    for (int i = 0; i < _simGraphs.Length; ++i) {
+    for (int i = 0; i < _simGraphs.Length; ++i)
+    {
       var graph = _simGraphs[i];
-      if (graph) {
+      if (graph)
+      {
         _simGraphs[i].gameObject.SetActive(!_hidden && (1 << i & (int)_includedSimStats) != 0);
       }
     }
-    for (int i = 0; i < _objGraphs.Length; ++i) {
+    for (int i = 0; i < _objGraphs.Length; ++i)
+    {
       var graph = _objGraphs[i];
-      if (graph) {
+      if (graph)
+      {
         _objGraphs[i].gameObject.SetActive(!_hidden && (1 << i & (int)_includedObjStats) != 0);
       }
     }
-    for (int i = 0; i < _netGraphs.Length; ++i) {
+    for (int i = 0; i < _netGraphs.Length; ++i)
+    {
       var graph = _netGraphs[i];
-      if (graph) {
+      if (graph)
+      {
         _netGraphs[i].gameObject.SetActive(!_hidden && (1 << i & (int)_includedNetStats) != 0);
       }
     }
   }
 
-  void Clear() {
-    if (_runner && _runner.Simulation != null) {
+  void Clear()
+  {
+    if (_runner && _runner.Simulation != null)
+    {
       _runner.Simulation.Stats.Clear();
     }
 
-    for (int i = 0; i < _simGraphs.Length; ++i) {
+    for (int i = 0; i < _simGraphs.Length; ++i)
+    {
       var graph = _simGraphs[i];
-      if (graph) {
+      if (graph)
+      {
         _simGraphs[i].Clear();
       }
     }
-    for (int i = 0; i < _objGraphs.Length; ++i) {
+    for (int i = 0; i < _objGraphs.Length; ++i)
+    {
       var graph = _objGraphs[i];
-      if (graph) {
+      if (graph)
+      {
         _objGraphs[i].Clear();
       }
     }
-    for (int i = 0; i < _netGraphs.Length; ++i) {
+    for (int i = 0; i < _netGraphs.Length; ++i)
+    {
       var graph = _netGraphs[i];
-      if (graph) {
+      if (graph)
+      {
         _netGraphs[i].Clear();
       }
     }
   }
 
-  void ToggleCanvasType() {
+  void ToggleCanvasType()
+  {
 #if UNITY_EDITOR
     UnityEditor.EditorGUIUtility.PingObject(gameObject);
-    if (Selection.activeGameObject == null) {
+    if (Selection.activeGameObject == null)
+    {
       Selection.activeGameObject = gameObject;
     }
 #endif
@@ -1230,54 +1382,69 @@ public class FusionStats : Fusion.Behaviour {
     CalculateLayout();
   }
 
-  void Close() {
+  void Close()
+  {
     Destroy(this.gameObject);
   }
 
-  void PingSelectObject() {
+  void PingSelectObject()
+  {
 
 #if UNITY_EDITOR
     var obj = Object;
-    if (obj) {
+    if (obj)
+    {
       EditorGUIUtility.PingObject(Object.gameObject);
       Selection.activeGameObject = Object.gameObject;
     }
 #endif
   }
 
-  void PingSelectFusionStats() {
+  void PingSelectFusionStats()
+  {
 
 #if UNITY_EDITOR
-      EditorGUIUtility.PingObject(gameObject);
-      Selection.activeGameObject = gameObject;
+    EditorGUIUtility.PingObject(gameObject);
+    Selection.activeGameObject = gameObject;
 #endif
   }
 
 #if UNITY_EDITOR
 
-  private void OnDrawGizmos() {
+  private void OnDrawGizmos()
+  {
     AutoGuideVisibility();
   }
 
-  void AutoGuideVisibility() {
-    if (_canvasRT == null) {
+  void AutoGuideVisibility()
+  {
+    if (_canvasRT == null)
+    {
       return;
     }
 
-    if (CanvasType == StatCanvasTypes.GameObject) {
-      if (_guidesRT == null) {
+    if (CanvasType == StatCanvasTypes.GameObject)
+    {
+      if (_guidesRT == null)
+      {
         _guidesRT = FusionStatsUtilities.MakeGuides(_canvasRT);
       }
-      if (Selection.activeGameObject == gameObject) {
+      if (Selection.activeGameObject == gameObject)
+      {
         _guidesRT.gameObject.SetActive(true);
         _guidesRT.localRotation = default;
 
-      } else {
+      }
+      else
+      {
         _guidesRT.gameObject.SetActive(false);
 
       }
-    } else {
-      if (_guidesRT) {
+    }
+    else
+    {
+      if (_guidesRT)
+      {
         DestroyImmediate(_guidesRT.gameObject);
       }
     }
@@ -1285,59 +1452,73 @@ public class FusionStats : Fusion.Behaviour {
 
 #endif
 
-  void LateUpdate() {
+  void LateUpdate()
+  {
 
     // Use of the Runner getter here is intentional - this forces a test of the existing Runner having gone null or inactive.
     var runner = Runner;
     bool runnerIsNull = runner == null;
 
-    if (AutoDestroy && runnerIsNull) {
+    if (AutoDestroy && runnerIsNull)
+    {
       Destroy(this.gameObject);
       return;
     }
 
-    if (_activeDirty) {
+    if (_activeDirty)
+    {
       ReapplyEnabled();
     }
 
-    if (_layoutDirty > 0) {
+    if (_layoutDirty > 0)
+    {
       CalculateLayout();
     }
 
-    if (Application.isPlaying == false) {
+    if (Application.isPlaying == false)
+    {
       return;
     }
 
     // NetConnection stats do not like being polled after shutdown and will throw assert fails.
-    if (runnerIsNull || runner.IsShutdown) {
+    if (runnerIsNull || runner.IsShutdown)
+    {
       return;
     }
 
-    if (_paused) {
+    if (_paused)
+    {
       return;
     }
 
     // Cap redraw rate - rate of 0 = disabled.
-    if (RedrawInterval > 0) {
+    if (RedrawInterval > 0)
+    {
       var currentime = Time.timeAsDouble;
-      if (currentime > _delayDrawUntil) {
+      if (currentime > _delayDrawUntil)
+      {
         _currentDrawTime = currentime;
-        while (_delayDrawUntil <= currentime) {
+        while (_delayDrawUntil <= currentime)
+        {
           _delayDrawUntil += RedrawInterval;
         }
       }
 
-      if (currentime != _currentDrawTime) {
+      if (currentime != _currentDrawTime)
+      {
         return;
       }
     }
 
-    if (EnableObjectStats) {
+    if (EnableObjectStats)
+    {
       RefreshObjectValues();
     }
 
-    foreach (var graph in _foundViews) {
-      if (graph != null && graph.isActiveAndEnabled) {
+    foreach (var graph in _foundViews)
+    {
+      if (graph != null && graph.isActiveAndEnabled)
+      {
         graph.Refresh();
       }
     }
@@ -1345,37 +1526,49 @@ public class FusionStats : Fusion.Behaviour {
 
   string _previousObjectTitle;
 
-  void RefreshObjectValues() {
+  void RefreshObjectValues()
+  {
 
     var obj = Object;
-    if (obj == null) {
+    if (obj == null)
+    {
       return;
     }
 
     var objectName = obj.name;
-    if (_previousObjectTitle != objectName) {
+    if (_previousObjectTitle != objectName)
+    {
       _objectNameText.text = objectName;
       _previousObjectTitle = objectName;
     }
   }
 
-  public FusionGraph CreateGraph(Stats.StatSourceTypes type, int statId, RectTransform parentRT) {
+  public FusionGraph CreateGraph(Stats.StatSourceTypes type, int statId, RectTransform parentRT)
+  {
 
     var fg = FusionGraph.Create(this, type, statId, parentRT);
 
-    if (type == Stats.StatSourceTypes.Simulation) {
+    if (type == Stats.StatSourceTypes.Simulation)
+    {
       _simGraphs[statId] = fg;
-      if (((int)_includedSimStats & (1 << statId)) == 0) {
+      if (((int)_includedSimStats & (1 << statId)) == 0)
+      {
         fg.gameObject.SetActive(false);
       }
-    } else if (type == Stats.StatSourceTypes.NetworkObject) {
+    }
+    else if (type == Stats.StatSourceTypes.NetworkObject)
+    {
       _objGraphs[statId] = fg;
-      if (((int)_includedObjStats & (1 << statId)) == 0) {
+      if (((int)_includedObjStats & (1 << statId)) == 0)
+      {
         fg.gameObject.SetActive(false);
       }
-    } else {
+    }
+    else
+    {
       _netGraphs[statId] = fg;
-      if (((int)_includedNetStats & (1 << statId)) == 0) {
+      if (((int)_includedNetStats & (1 << statId)) == 0)
+      {
         fg.gameObject.SetActive(false);
       }
     }
@@ -1384,63 +1577,83 @@ public class FusionStats : Fusion.Behaviour {
   }
 
   // returns true if a graph has been added.
-  void ReapplyEnabled() {
+  void ReapplyEnabled()
+  {
 
     _activeDirty = false;
 
-    if (_simGraphs == null || _simGraphs.Length < 0) {
+    if (_simGraphs == null || _simGraphs.Length < 0)
+    {
       return;
     }
 
     // This is null if the children were deleted. Stop execution, or new Graphs will be created without a parent.
-    if (_graphsLayoutRT == null) {
+    if (_graphsLayoutRT == null)
+    {
       return;
     }
 
-    for (int i = 0; i < _simGraphs.Length; ++i) {
+    for (int i = 0; i < _simGraphs.Length; ++i)
+    {
       var graph = _simGraphs[i];
       bool enabled = ((Stats.SimStatFlags)(1 << i) & _includedSimStats) != 0;
-      if (graph == null) {
-        if (enabled) {
+      if (graph == null)
+      {
+        if (enabled)
+        {
           graph = CreateGraph(Stats.StatSourceTypes.Simulation, i, _graphsLayoutRT);
           _simGraphs[i] = graph;
-        } else {
+        }
+        else
+        {
           continue;
         }
       }
       graph.gameObject.SetActive(enabled);
     }
 
-    for (int i = 0; i < _objGraphs.Length; ++i) {
+    for (int i = 0; i < _objGraphs.Length; ++i)
+    {
       var graph = _objGraphs[i];
       bool enabled = _enableObjectStats && ((Stats.ObjStatFlags)(1 << i) & _includedObjStats) != 0;
-      if (graph == null) {
-        if (enabled) {
+      if (graph == null)
+      {
+        if (enabled)
+        {
           graph = CreateGraph(Stats.StatSourceTypes.NetworkObject, i, _graphsLayoutRT);
           _objGraphs[i] = graph;
-        } else {
+        }
+        else
+        {
           continue;
         }
       }
 
-      if (_objGraphs[i] != null) {
+      if (_objGraphs[i] != null)
+      {
         graph.gameObject.SetActive(enabled);
       }
     }
 
-    for (int i = 0; i < _netGraphs.Length; ++i) {
+    for (int i = 0; i < _netGraphs.Length; ++i)
+    {
       var graph = _netGraphs[i];
       bool enabled = ((Stats.NetStatFlags)(1 << i) & _includedNetStats) != 0;
-      if (graph == null) {
-        if (enabled) {
+      if (graph == null)
+      {
+        if (enabled)
+        {
           graph = CreateGraph(Stats.StatSourceTypes.NetConnection, i, _graphsLayoutRT);
           _netGraphs[i] = graph;
-        } else {
+        }
+        else
+        {
           continue;
         }
       }
 
-      if (_netGraphs[i] != null) {
+      if (_netGraphs[i] != null)
+      {
         graph.gameObject.SetActive(enabled);
       }
     }
@@ -1448,15 +1661,20 @@ public class FusionStats : Fusion.Behaviour {
 
   float _lastLayoutUpdate;
 
-  void CalculateLayout() {
+  void CalculateLayout()
+  {
 
-    if (_rootPanelRT == null || _graphsLayoutRT == null) {
+    if (_rootPanelRT == null || _graphsLayoutRT == null)
+    {
       return;
     }
 
-    if (_foundGraphs == null) {
+    if (_foundGraphs == null)
+    {
       _foundGraphs = new List<FusionGraph>(_graphsLayoutRT.GetComponentsInChildren<FusionGraph>(false));
-    } else {
+    }
+    else
+    {
       GetComponentsInChildren(false, _foundGraphs);
     }
 
@@ -1464,24 +1682,28 @@ public class FusionStats : Fusion.Behaviour {
     // _layoutDirty can be set to values greater than 1 to force a recalculate for several consecutive Updates.
     var time = Time.time;
 
-    if (_lastLayoutUpdate < time) {
+    if (_lastLayoutUpdate < time)
+    {
       _layoutDirty--;
       _lastLayoutUpdate = time;
 
     }
 
 #if UNITY_EDITOR
-    if (Application.isPlaying == false && _layoutDirty > 0) {
+    if (Application.isPlaying == false && _layoutDirty > 0)
+    {
       UnityEditor.EditorApplication.delayCall -= CalculateLayout;
       UnityEditor.EditorApplication.delayCall += CalculateLayout;
     }
 #endif
 
-    if (_layoutDirty <= 0 && _canvas.enabled == false) {
+    if (_layoutDirty <= 0 && _canvas.enabled == false)
+    {
       //_canvas.enabled = true;
     }
 
-    if (_rootPanelRT) {
+    if (_rootPanelRT)
+    {
 
 #if UNITY_EDITOR
       AutoGuideVisibility();
@@ -1489,18 +1711,22 @@ public class FusionStats : Fusion.Behaviour {
 
       var maxHeaderHeight = Math.Min(_maxHeaderHeight, _rootPanelRT.rect.width / 4);
 
-      if (_canvasType == StatCanvasTypes.GameObject) {
+      if (_canvasType == StatCanvasTypes.GameObject)
+      {
         _canvas.renderMode = RenderMode.WorldSpace;
         var scale = CanvasScale / SCREEN_SCALE_H; //  (1f / SCREEN_SCALE_H) * Scale;
         _canvasRT.localScale = new Vector3(scale, scale, scale);
         _canvasRT.sizeDelta = new Vector2(1024, 1024);
         _canvasRT.localPosition = new Vector3(0, 0, CanvasDistance);
-        
+
         // TODO: Cache this
-        if (_canvasRT.GetComponent<FusionStatsBillboard>() == false) {
+        if (_canvasRT.GetComponent<FusionStatsBillboard>() == false)
+        {
           _canvasRT.localRotation = default;
         }
-      } else {
+      }
+      else
+      {
         _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
       }
 
@@ -1510,9 +1736,12 @@ public class FusionStats : Fusion.Behaviour {
 
       Vector2 icoMinAnchor;
 
-      if (_showButtonLabels) {
+      if (_showButtonLabels)
+      {
         icoMinAnchor = new Vector2(0.0f, FusionStatsUtilities.BTTN_LBL_NORM_HGHT * .5f);
-      } else {
+      }
+      else
+      {
         icoMinAnchor = new Vector2(0.0f, 0.0f);
       }
 
@@ -1530,47 +1759,51 @@ public class FusionStats : Fusion.Behaviour {
 
       var rect = CurrentRect;
 
-      _rootPanelRT.anchorMax          = new Vector2(rect.xMax, rect.yMax);
-      _rootPanelRT.anchorMin          = new Vector2(rect.xMin, rect.yMin);
-      _rootPanelRT.sizeDelta          = new Vector2(0.0f, 0.0f);
-      _rootPanelRT.pivot              = new Vector2(0.5f, 0.5f);
+      _rootPanelRT.anchorMax = new Vector2(rect.xMax, rect.yMax);
+      _rootPanelRT.anchorMin = new Vector2(rect.xMin, rect.yMin);
+      _rootPanelRT.sizeDelta = new Vector2(0.0f, 0.0f);
+      _rootPanelRT.pivot = new Vector2(0.5f, 0.5f);
       _rootPanelRT.anchoredPosition3D = default;
 
-      _headerRT.anchorMin             = new Vector2(0.0f, 1);
-      _headerRT.anchorMax             = new Vector2(1.0f, 1);
-      _headerRT.pivot                 = new Vector2(0.5f, 1);
-      _headerRT.anchoredPosition3D    = default;
-      _headerRT.sizeDelta             = new Vector2(0, /*TITLE_HEIGHT +*/ maxHeaderHeight);
+      _headerRT.anchorMin = new Vector2(0.0f, 1);
+      _headerRT.anchorMax = new Vector2(1.0f, 1);
+      _headerRT.pivot = new Vector2(0.5f, 1);
+      _headerRT.anchoredPosition3D = default;
+      _headerRT.sizeDelta = new Vector2(0, /*TITLE_HEIGHT +*/ maxHeaderHeight);
 
-      _objectTitlePanelRT.offsetMax   = new Vector2(-MARGIN, -MARGIN);
-      _objectTitlePanelRT.offsetMin   = new Vector2( MARGIN, -(ObjectTitleHeight));
-      _objectIdsGroupRT.offsetMax     = new Vector2(-MARGIN, -(ObjectTitleHeight + MARGIN));
-      _objectIdsGroupRT.offsetMin     = new Vector2( MARGIN, -(ObjectTitleHeight + ObjectIdsHeight));
-      _objectMetersPanelRT.offsetMax  = new Vector2(-MARGIN, -(ObjectTitleHeight + ObjectIdsHeight + MARGIN));
-      _objectMetersPanelRT.offsetMin  = new Vector2( MARGIN, -(ObjectTitleHeight + ObjectIdsHeight + ObjectMetersHeight ));
+      _objectTitlePanelRT.offsetMax = new Vector2(-MARGIN, -MARGIN);
+      _objectTitlePanelRT.offsetMin = new Vector2(MARGIN, -(ObjectTitleHeight));
+      _objectIdsGroupRT.offsetMax = new Vector2(-MARGIN, -(ObjectTitleHeight + MARGIN));
+      _objectIdsGroupRT.offsetMin = new Vector2(MARGIN, -(ObjectTitleHeight + ObjectIdsHeight));
+      _objectMetersPanelRT.offsetMax = new Vector2(-MARGIN, -(ObjectTitleHeight + ObjectIdsHeight + MARGIN));
+      _objectMetersPanelRT.offsetMin = new Vector2(MARGIN, -(ObjectTitleHeight + ObjectIdsHeight + ObjectMetersHeight));
 
       // Disable object sections that have been minimized to 0
-      _objectTitlePanelRT .gameObject.SetActive(EnableObjectStats && ObjectTitleHeight  > 0);
-      _objectIdsGroupRT   .gameObject.SetActive(EnableObjectStats && ObjectIdsHeight    > 0);
+      _objectTitlePanelRT.gameObject.SetActive(EnableObjectStats && ObjectTitleHeight > 0);
+      _objectIdsGroupRT.gameObject.SetActive(EnableObjectStats && ObjectIdsHeight > 0);
       _objectMetersPanelRT.gameObject.SetActive(EnableObjectStats && ObjectMetersHeight > 0);
 
       _statsPanelRT.ExpandAnchor().SetOffsets(0, 0, 0, -(/*TITLE_HEIGHT + */maxHeaderHeight));
 
-      if (_enableObjectStats && _statsPanelRT.rect.height < (ObjectTitleHeight + ObjectIdsHeight + ObjectMetersHeight)) {
-        _statsPanelRT.offsetMin = new Vector2(0.0f, _statsPanelRT.rect.height -(ObjectTitleHeight + ObjectIdsHeight + ObjectMetersHeight + MARGIN));
+      if (_enableObjectStats && _statsPanelRT.rect.height < (ObjectTitleHeight + ObjectIdsHeight + ObjectMetersHeight))
+      {
+        _statsPanelRT.offsetMin = new Vector2(0.0f, _statsPanelRT.rect.height - (ObjectTitleHeight + ObjectIdsHeight + ObjectMetersHeight + MARGIN));
       }
 
       var graphColCount = GraphColumnCount > 0 ? GraphColumnCount : (int)(_graphsLayoutRT.rect.width / (_graphMaxWidth + MARGIN));
-      if (graphColCount < 1) {
+      if (graphColCount < 1)
+      {
         graphColCount = 1;
       }
 
       var graphRowCount = (int)Math.Ceiling((double)_foundGraphs.Count / graphColCount);
-      if (graphRowCount < 1) {
+      if (graphRowCount < 1)
+      {
         graphRowCount = 1;
       }
 
-      if (graphRowCount == 1) {
+      if (graphRowCount == 1)
+      {
         graphColCount = _foundGraphs.Count;
       }
 
@@ -1579,29 +1812,37 @@ public class FusionStats : Fusion.Behaviour {
 
       var cellwidth = _graphsLayoutRT.rect.width / graphColCount - MARGIN;
       var cellheight = _graphsLayoutRT.rect.height / graphRowCount - (/*(graphRowCount - 1) **/ MARGIN);
-      
+
       _graphGridLayoutGroup.cellSize = new Vector2(cellwidth, cellheight);
       _graphsLayoutRT.offsetMax = new Vector2(0, _enableObjectStats ? -(ObjectTitleHeight + ObjectIdsHeight + ObjectMetersHeight + MARGIN) : -MARGIN);
 
 
-      if (_foundViews == null) {
+      if (_foundViews == null)
+      {
         _foundViews = new List<IFusionStatsView>(GetComponentsInChildren<IFusionStatsView>(false));
-      } else {
+      }
+      else
+      {
         GetComponentsInChildren(false, _foundViews);
       }
 
-      if (_objGraphs != null) {
+      if (_objGraphs != null)
+      {
         // enabled/disable any object graphs based on _enabledObjectStats setting
-        foreach (var objGraph in _objGraphs) {
-          if (objGraph) {
+        foreach (var objGraph in _objGraphs)
+        {
+          if (objGraph)
+          {
             objGraph.gameObject.SetActive(((int)_includedObjStats & (1 << objGraph.StatId)) != 0 && _enableObjectStats);
           }
         }
       }
 
-      for (int i = 0; i < _foundViews.Count; ++i) {
+      for (int i = 0; i < _foundViews.Count; ++i)
+      {
         var graph = _foundViews[i];
-        if (graph == null || graph.isActiveAndEnabled == false) {
+        if (graph == null || graph.isActiveAndEnabled == false)
+        {
           continue;
         }
         graph.CalculateLayout();
@@ -1611,11 +1852,13 @@ public class FusionStats : Fusion.Behaviour {
     }
   }
 
-  void ApplyDefaultLayout(DefaultLayouts defaults, StatCanvasTypes? applyForCanvasType = null) {
+  void ApplyDefaultLayout(DefaultLayouts defaults, StatCanvasTypes? applyForCanvasType = null)
+  {
     bool applyToGO = applyForCanvasType.HasValue == false || applyForCanvasType.Value == StatCanvasTypes.GameObject;
     bool applyToOL = applyForCanvasType.HasValue == false || applyForCanvasType.Value == StatCanvasTypes.Overlay;
 
-    if (defaults == DefaultLayouts.Custom) {
+    if (defaults == DefaultLayouts.Custom)
+    {
       return;
     }
 
@@ -1629,46 +1872,55 @@ public class FusionStats : Fusion.Behaviour {
     isTall = Screen.height > Screen.width;
 #endif
 
-    switch (defaults) {
-      case DefaultLayouts.Left: {
+    switch (defaults)
+    {
+      case DefaultLayouts.Left:
+        {
           objectrect = Rect.MinMaxRect(0.0f, 0.0f, 0.3f, 1.0f);
           screenrect = objectrect;
           break;
         }
-      case DefaultLayouts.Right: {
+      case DefaultLayouts.Right:
+        {
           objectrect = Rect.MinMaxRect(0.7f, 0.0f, 1.0f, 1.0f);
           screenrect = objectrect;
           break;
         }
-      case DefaultLayouts.UpperLeft: {
-          objectrect =          Rect.MinMaxRect(0.0f, 0.5f, 0.3f, 1.0f);
-          screenrect = isTall ? Rect.MinMaxRect(0.0f, 0.7f, 0.3f, 1.0f) : objectrect ;
+      case DefaultLayouts.UpperLeft:
+        {
+          objectrect = Rect.MinMaxRect(0.0f, 0.5f, 0.3f, 1.0f);
+          screenrect = isTall ? Rect.MinMaxRect(0.0f, 0.7f, 0.3f, 1.0f) : objectrect;
           break;
         }
-      case DefaultLayouts.UpperRight: {
-          objectrect =          Rect.MinMaxRect(0.7f, 0.5f, 1.0f, 1.0f);
+      case DefaultLayouts.UpperRight:
+        {
+          objectrect = Rect.MinMaxRect(0.7f, 0.5f, 1.0f, 1.0f);
           screenrect = isTall ? Rect.MinMaxRect(0.7f, 0.7f, 1.0f, 1.0f) : objectrect;
           break;
         }
-      case DefaultLayouts.Full: {
+      case DefaultLayouts.Full:
+        {
           objectrect = Rect.MinMaxRect(0.0f, 0.0f, 1.0f, 1.0f);
           screenrect = objectrect;
           break;
         }
-      default: {
+      default:
+        {
           objectrect = Rect.MinMaxRect(0.0f, 0.5f, 0.3f, 1.0f);
           screenrect = objectrect;
           break;
         }
     }
 
-    if (applyToGO) {
+    if (applyToGO)
+    {
       GameObjectRect = objectrect;
     }
-    if (applyToOL) {
+    if (applyToOL)
+    {
       OverlayRect = screenrect;
     }
-    
+
     _layoutDirty += 1;
   }
 }

@@ -1070,7 +1070,7 @@ MonoBehaviour:
   _prevStatSourceType: 2
   _prevStatId: 0
   Height: 50
-  _layout: 0
+  _layout: 7
   _showGraph: 2
   Padding: 5
   _alwaysExpandGraph: 0
@@ -1709,7 +1709,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 398.4934, y: 50.732483}
+  m_CellSize: {x: 398.03113, y: 50.860596}
   m_Spacing: {x: 6, y: 6}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -10898,7 +10898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  m_Color: {r: 0.3, g: 0.3, b: 0.3, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11900,7 +11900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1806568612
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13806,7 +13806,7 @@ MonoBehaviour:
     y: 0.9
     width: 0.3
     height: 0.100000024
-  _defaultLayout: 0
+  _defaultLayout: 7
   _noTextOverlap: 0
   _noGraphShader: 0
   GraphColumnCount: 0
@@ -13823,7 +13823,7 @@ MonoBehaviour:
   _includedNetStats: 1
   _includedSimStats: 0
   AutoDestroy: 0
-  EnforceSingle: 1
+  EnforceSingle: 0
   Guid: c6aa4fb2-ecb2
   _modifyColors: 0
   _graphColorGood: {r: 0.1, g: 0.5, b: 0.1, a: 0.9}

@@ -39,7 +39,7 @@ public class WizardHealthManager : NetworkBehaviour
     // if 10 units away from safezone
     if (IsOnLava())
     {
-      if (wiz.Damage >= 20)
+      if (wiz.Damage >= 150)
       {
         if (GetComponent<ControllerPrototype>().bot)
         {
