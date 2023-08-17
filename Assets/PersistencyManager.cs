@@ -5,6 +5,9 @@ using UnityEngine;
 public class PersistencyManager : MonoBehaviour
 {
 
+  public const int STARTING_MONEY = 5;
+  public const int INCOME = 3;
+
   public const int MAX_LIVES = 3;
   public const int MAX_WINS = 6;
 
@@ -18,6 +21,7 @@ public class PersistencyManager : MonoBehaviour
       public int level;
     }
 
+    public bool rollOnLoad;
     public List<string> shop;
     public int lives;
     public int wins;
@@ -33,6 +37,7 @@ public class PersistencyManager : MonoBehaviour
       lives = MAX_LIVES;
       wins = 0;
       ownedAbilities = new List<OwnedAbility>();
+      rollOnLoad = false;
     }
   }
 
@@ -56,7 +61,7 @@ public class PersistencyManager : MonoBehaviour
 
     if (!PlayerPrefs.HasKey("data"))
     {
-      var data = new Data(10);
+      var data = new Data(STARTING_MONEY);
       data.ownedAbilities.Add(new Data.OwnedAbility() { abilityName = "None", level = 0 });
       data.ownedAbilities.Add(new Data.OwnedAbility() { abilityName = "None", level = 0 });
       data.ownedAbilities.Add(new Data.OwnedAbility() { abilityName = "None", level = 0 });
@@ -72,7 +77,9 @@ public class PersistencyManager : MonoBehaviour
   {
     var data = load();
     data.lives--;
-    data.money += 5;
+    data.money += INCOME;
+    data.rollOnLoad = true;
+    Debug.Log(JsonUtility.ToJson(data));
 
     if (data.lives <= 0)
     {

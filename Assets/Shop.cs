@@ -222,8 +222,9 @@ public class Shop : MonoBehaviour
     var data = PersistencyManager.load();
     money = data.money;
 
-    if (data.shop == null)
+    if (data.shop == null || data.rollOnLoad)
     {
+      data.rollOnLoad = false;
       Roll(true);
     }
     else
