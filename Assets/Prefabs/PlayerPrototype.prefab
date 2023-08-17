@@ -558,6 +558,7 @@ GameObject:
   - component: {fileID: 6663685570927179161}
   - component: {fileID: 2440190601981346491}
   - component: {fileID: 8190632567107939211}
+  - component: {fileID: -262396272087800158}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -615,6 +616,7 @@ MonoBehaviour:
   - {fileID: 6663685570927179161}
   - {fileID: 2440190601981346491}
   - {fileID: 8190632567107939211}
+  - {fileID: -262396272087800158}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
 MonoBehaviour:
@@ -879,3 +881,20 @@ MonoBehaviour:
   meta: {fileID: 11400000, guid: 4d9dc30c51949e143acb553e99b4f98b, type: 2}
   display: {fileID: 0}
   dashDistance: 3
+--- !u!114 &-262396272087800158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c44c0f6ff0d1bd4bbf9ea5958bcdd87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  meta: {fileID: 11400000, guid: 07365ae1c7ea65348a2de8d0e3cc3624, type: 2}
+  display: {fileID: 0}
+  haste: 1.5
+  length: 4

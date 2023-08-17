@@ -98,10 +98,10 @@ public class NetworkCharacterControllerPrototype : NetworkTransform
     }
     else
     {
-      double stunned_acceleration = GetComponent<Wizard>().stunned() ? 0.1 : acceleration;
+      double stunned_acceleration = GetAcceleration();
       Vector3 vel = horizontalVel + direction * (float)stunned_acceleration * deltaTime;
 
-      horizontalVel = GetComponent<Wizard>().stunned() ? vel : Vector3.ClampMagnitude(vel, maxSpeed);
+      horizontalVel = GetComponent<Wizard>().stunned() ? vel : Vector3.ClampMagnitude(vel, GetMaxSpeed());
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
     }
 
@@ -112,5 +112,31 @@ public class NetworkCharacterControllerPrototype : NetworkTransform
 
     Velocity = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
     IsGrounded = Controller.isGrounded;
+  }
+
+  private float GetAcceleration()
+  {
+    if (GetComponent<Wizard>().stunned())
+    {
+      return 0;
+    }
+
+    if (GetComponent<Wizard>().haste_remaining.ExpiredOrNotRunning(Runner))
+    {
+      return acceleration;
+    }
+
+    return acceleration * GetComponent<Haste>().haste;
+  }
+
+  private float GetMaxSpeed()
+  {
+    if (GetComponent<Wizard>().haste_remaining.ExpiredOrNotRunning(Runner))
+    {
+      return maxSpeed;
+    }
+
+    return maxSpeed * GetComponent<Haste>().haste;
+
   }
 }

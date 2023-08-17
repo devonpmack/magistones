@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class Ability : Fusion.NetworkBehaviour
 {
   public AbilityMeta meta;
+  public int level = 0;
 
   abstract protected void onCast(NetworkInputPrototype input);
 
