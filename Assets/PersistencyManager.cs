@@ -38,13 +38,18 @@ public class PersistencyManager : MonoBehaviour
 
   public Data data;
 
-  public static Data load()
+  public static bool IsClone()
   {
     string[] s = Application.dataPath.Split('/');
     string projectName = s[s.Length - 2];
 
+    return projectName == "magistones_clone_0";
+  }
 
-    if (projectName == "magistones_clone_0")
+  public static Data load()
+  {
+    Debug.Log(PlayerPrefs.GetString("data"));
+    if (IsClone())
     {
       return JsonUtility.FromJson<Data>("{\"shop\":[],\"lives\":3,\"wins\":0,\"money\":3,\"ownedAbilities\":[{\"abilityName\":\"Rock Throw\",\"level\":0},{\"abilityName\":\"Spin\",\"level\":1},{\"abilityName\":\"Final Chapter\",\"level\":1},{\"abilityName\":\"Blink\",\"level\":0}]}");
     }
@@ -67,7 +72,16 @@ public class PersistencyManager : MonoBehaviour
   {
     var data = load();
     data.lives--;
-    save(data);
+    data.money += 5;
+
+    if (data.lives <= 0)
+    {
+      Shop.Reset();
+    }
+    else
+    {
+      save(data);
+    }
   }
 
   public static void WinAndSave()
@@ -77,20 +91,15 @@ public class PersistencyManager : MonoBehaviour
     save(data);
   }
 
-  public static void RestartGame()
-  {
-    clear();
-    UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-  }
-
-
 
   public static void save(Data data)
   {
+    if (IsClone()) return;
+
     PlayerPrefs.SetString("data", JsonUtility.ToJson(data));
   }
 
-  public static void clear()
+  public static void Clear()
   {
     PlayerPrefs.DeleteKey("data");
   }

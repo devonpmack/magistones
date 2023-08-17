@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class AbilityDisplayContainer : MonoBehaviour
 {
   public GameObject abilityDisplayTemplate;
-  public GameObject noAbilityPrefab;
 
   private string[] hotkeys = { "LMB", "RMB", "LSHIFT", "SPACE" };
 
@@ -15,13 +14,6 @@ public class AbilityDisplayContainer : MonoBehaviour
     var i = 0;
     foreach (var ownedAbility in data.ownedAbilities)
     {
-
-      if (ownedAbility.abilityName == "None")
-      {
-        Instantiate(noAbilityPrefab, transform);
-        continue;
-      }
-
       var ability = AbilityMeta.get(ownedAbility.abilityName);
       var abilityDisplay = Instantiate(abilityDisplayTemplate, transform);
 
@@ -30,5 +22,4 @@ public class AbilityDisplayContainer : MonoBehaviour
       ability.setTooltip(abilityDisplay.GetComponent<SimpleTooltip>(), ownedAbility.level);
     }
   }
-
 }

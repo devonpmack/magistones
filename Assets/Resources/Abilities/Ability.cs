@@ -1,7 +1,8 @@
 using Fusion;
 using UnityEngine;
 
-public abstract class Ability : Fusion.NetworkBehaviour {
+public abstract class Ability : Fusion.NetworkBehaviour
+{
   public AbilityMeta meta;
 
   abstract protected void onCast(NetworkInputPrototype input);
@@ -11,15 +12,20 @@ public abstract class Ability : Fusion.NetworkBehaviour {
   [HideInInspector]
   public AbilityDisplay display;
 
-  public void cast(NetworkInputPrototype input) {
-    if (cooldown_remaining.ExpiredOrNotRunning(Runner)) {
+  public void cast(NetworkInputPrototype input)
+  {
+    if (meta.name == "None") return;
+
+    if (cooldown_remaining.ExpiredOrNotRunning(Runner))
+    {
       onCast(input);
 
       cooldown_remaining = TickTimer.CreateFromSeconds(Runner, meta.cooldown); ;
     }
   }
 
-  public override void FixedUpdateNetwork() {
+  public override void FixedUpdateNetwork()
+  {
     if (display == null) return;
 
     display.UpdateCooldown(cooldown_remaining.RemainingTime(Runner));

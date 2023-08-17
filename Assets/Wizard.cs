@@ -21,9 +21,6 @@ public class Wizard : NetworkBehaviour
     var abilityNum = 0;
     foreach (var ownedAbility in ownedAbilities)
     {
-      if (ownedAbility == "None")
-        continue;
-
       abilities[abilityNum++] = allAbilities.First(a => a.GetType().Name.Replace(" ", string.Empty) == ownedAbility.Replace(" ", string.Empty));
     }
   }

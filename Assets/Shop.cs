@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Shop : MonoBehaviour
 {
@@ -28,8 +29,8 @@ public class Shop : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    abilities = AbilityMeta.getAll();
-    this.ownedAbilities = new List<OwnedAbility>();
+    abilities = AbilityMeta.getAll().Where(a => a.name != "None").ToArray();
+    ownedAbilities = new List<OwnedAbility>();
 
     load();
   }
@@ -52,13 +53,18 @@ public class Shop : MonoBehaviour
     ownedAbilities.Insert(index, toMove);
 
 
-
     save();
   }
 
-  public void Reset()
+  public static void GoToShop()
   {
-    PersistencyManager.RestartGame();
+    UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
+  }
+
+  public static void Reset()
+  {
+    PersistencyManager.Clear();
+    GoToShop();
   }
 
   public void purchase(Transform shopItem, string abilityName)
@@ -69,7 +75,7 @@ public class Shop : MonoBehaviour
     // if already in the array, just increment level
     for (int i = 0; i < ownedAbilities.Count; i++)
     {
-      if (ownedAbilities[i] != null && ownedAbilities[i].abilityName == abilityName)
+      if (ownedAbilities[i].abilityName == abilityName)
       {
         if (ownedAbilities[i].level >= 2)
           return;
@@ -90,14 +96,17 @@ public class Shop : MonoBehaviour
     {
       for (int i = 0; i < ownedAbilities.Count; i++)
       {
-        if (ownedAbilities[i] != null && ownedAbilities[i].abilityName == "None")
+        if (ownedAbilities[i].abilityName == "None")
         {
           Destroy(ownedAbilities[i].transform.gameObject);
           ownedAbilities.RemoveAt(i);
+          Debug.Log("Removed a none");
           break;
         }
       }
     }
+
+    Debug.Log(ownedAbilities.Count);
 
     // if there are still 4 abilities, don't add another
     if (ownedAbilities.Count >= 4)
@@ -140,7 +149,7 @@ public class Shop : MonoBehaviour
     save();
   }
 
-  public void roll(bool free = false)
+  public void Roll(bool free = false)
   {
     if (money <= 0)
       return;
@@ -177,6 +186,7 @@ public class Shop : MonoBehaviour
 
   public void save()
   {
+
     PersistencyManager.Data data = new PersistencyManager.Data(money);
 
     foreach (OwnedAbility ownedAbility in ownedAbilities)
@@ -188,6 +198,18 @@ public class Shop : MonoBehaviour
       });
 
       data.money = money;
+    }
+
+    if (data.ownedAbilities.Count == 0)
+    {
+      for (int i = 0; i < 4; i++)
+      {
+        data.ownedAbilities.Add(new PersistencyManager.Data.OwnedAbility
+        {
+          abilityName = "None",
+          level = 0
+        });
+      }
     }
 
     data.shop = inShop;
@@ -202,7 +224,7 @@ public class Shop : MonoBehaviour
 
     if (data.shop == null)
     {
-      roll(true);
+      Roll(true);
     }
     else
     {

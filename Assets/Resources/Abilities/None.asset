@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea11954239ded4638b588ad327bfed9b, type: 3}
-  m_Name: RockThrow
+  m_Name: None
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 2c646cda5f384e743b51a665ada826b2, type: 3}
-  name: Rock Throw
-  description: Throw a rock that pushes players away
-  cooldown: 3
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  name: None
+  description: Ability placeholder
+  cooldown: 1

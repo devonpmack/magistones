@@ -9,6 +9,7 @@ TagManager:
   - Cooldown
   - SafeFloor
   - Lava
+  - Network
   layers:
   - Default
   - TransparentFX

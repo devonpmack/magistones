@@ -4,6 +4,7 @@ using UnityEngine;
 public class SpinHitbox : NetworkBehaviour
 {
   public float lifeTime;
+  public float Damage;
 
   [Networked] private PlayerRef source { get; set; }
 
@@ -34,7 +35,7 @@ public class SpinHitbox : NetworkBehaviour
 
         if (player.GetComponent<NetworkObject>().InputAuthority != source)
         {
-          player.GetComponent<Wizard>().RPC_DoDamage(12, player.transform.position - transform.position);
+          player.GetComponent<Wizard>().RPC_DoDamage(Damage, player.transform.position - transform.position);
         }
       }
     }

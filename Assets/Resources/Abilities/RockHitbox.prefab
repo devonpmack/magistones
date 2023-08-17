@@ -200,4 +200,4 @@ MonoBehaviour:
   _interpolationDataSource: 0
   velocity: 14
   lifeTime: 3
-  damage: 13
+  damage: 15

@@ -556,6 +556,7 @@ GameObject:
   - component: {fileID: -2327307306809596008}
   - component: {fileID: -7316827651609632409}
   - component: {fileID: -2445564814379733887}
+  - component: {fileID: 6663685570927179161}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -610,6 +611,7 @@ MonoBehaviour:
   - {fileID: -2327307306809596008}
   - {fileID: -7316827651609632409}
   - {fileID: -2445564814379733887}
+  - {fileID: 6663685570927179161}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
 MonoBehaviour:
@@ -689,9 +691,9 @@ MonoBehaviour:
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
   gravity: -20
-  acceleration: 30
+  acceleration: 35
   braking: 5
-  maxSpeed: 5
+  maxSpeed: 6
   rotationSpeed: 15
   _IsGrounded: 0
   _Velocity: {x: 0, y: 0, z: 0}
@@ -809,3 +811,18 @@ MonoBehaviour:
   display: {fileID: 0}
   projectile: {fileID: 3707910779873791550, guid: 22eeb441c4465d545a5607b095c0bae3,
     type: 3}
+--- !u!114 &6663685570927179161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca2561e5af72c049906ba7b3a40dddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  meta: {fileID: 11400000, guid: 7b3407ed53239bd42bb60aa1d7695160, type: 2}
+  display: {fileID: 0}

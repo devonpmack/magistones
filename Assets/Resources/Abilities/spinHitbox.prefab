@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   lifeTime: 0.5
+  Damage: 20
 --- !u!114 &3860645770516519867
 MonoBehaviour:
   m_ObjectHideFlags: 0
