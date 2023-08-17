@@ -17,6 +17,5 @@ public class FieryFist : Ability
       });
 
     GetComponent<Wizard>().stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.8f);
-    GetComponent<NetworkCharacterControllerPrototype>().Velocity = UnityEngine.Vector3.zero;
   }
 }

@@ -1717,7 +1717,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 313.93152, y: 82.04144}
+  m_CellSize: {x: 473.9994, y: 33.787903}
   m_Spacing: {x: 6, y: 6}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -11317,23 +11317,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8815895893571785555, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}
-      propertyPath: NetworkedBehaviours.Array.size
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 8815895893571785555, guid: e4df49d0bf125a740a2c14ab6e887572,
-        type: 3}
-      propertyPath: DestroyWhenStateAuthorityLeaves
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8815895893571785555, guid: e4df49d0bf125a740a2c14ab6e887572,
-        type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: -3224267534050313886
+      value: 20937173514238652
       objectReference: {fileID: 0}
     - target: {fileID: 8815895893571785555, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
-      value: 1506854929124050829
+      value: 4097393878698116761
       objectReference: {fileID: 0}
     - target: {fileID: 8815895893571785557, guid: e4df49d0bf125a740a2c14ab6e887572,
         type: 3}

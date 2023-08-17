@@ -557,6 +557,7 @@ GameObject:
   - component: {fileID: -2445564814379733887}
   - component: {fileID: 6663685570927179161}
   - component: {fileID: 2440190601981346491}
+  - component: {fileID: 8190632567107939211}
   m_Layer: 6
   m_Name: PlayerPrototype
   m_TagString: Player
@@ -613,6 +614,7 @@ MonoBehaviour:
   - {fileID: -2445564814379733887}
   - {fileID: 6663685570927179161}
   - {fileID: 2440190601981346491}
+  - {fileID: 8190632567107939211}
   SimulationBehaviours: []
 --- !u!114 &8815895893571785557
 MonoBehaviour:
@@ -861,3 +863,19 @@ MonoBehaviour:
   display: {fileID: 0}
   punchHitbox: {fileID: -5957021748612604166, guid: bb25223bf2d50024681ebc77425b1e72,
     type: 3}
+--- !u!114 &8190632567107939211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815895893571785564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3acf2697cc6055d459c0c1351379b947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  meta: {fileID: 11400000, guid: 4d9dc30c51949e143acb553e99b4f98b, type: 2}
+  display: {fileID: 0}
+  dashDistance: 3
