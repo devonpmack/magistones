@@ -26,9 +26,10 @@ public class Dash : Ability
       var players = GameObject.FindGameObjectsWithTag("Player");
       foreach (var player in players)
       {
-        if (player != gameObject && Vector3.Distance(player.transform.position, transform.position) < 1.5f)
+
+        if (player != gameObject && Vector3.Distance(player.transform.position, transform.position) < 1.5f && !player.GetComponent<Wizard>().stunned())
         {
-          player.GetComponent<Wizard>().RPC_DoDamage(10, transform.forward);
+          player.GetComponent<Wizard>().RPC_DoDamage(20, transform.forward);
         }
       }
     }
