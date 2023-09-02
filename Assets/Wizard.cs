@@ -33,7 +33,7 @@ public class Wizard : NetworkBehaviour
 
   public bool stunned()
   {
-    return !stun_remaining.ExpiredOrNotRunning(Runner);
+    return !stun_remaining.ExpiredOrNotRunning(Runner) || GetComponentInChildren<PushHitbox>() != null;
   }
 
   [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

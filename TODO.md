@@ -1,0 +1,6 @@
+- show wins on game screen? on death? figure out the format?
+- juliette dash + punch abilities
+- augments/modifiers :hypers:
+- player animated models
+- hitbox is not getting cleared
+- punch is not pointing right dir

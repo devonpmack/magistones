@@ -1,4 +1,3 @@
-using System.Numerics;
 using Fusion;
 using UnityEngine;
 
@@ -8,6 +7,8 @@ public class FieryFist : Ability
 
   protected override void onCast(NetworkInputPrototype input)
   {
+    transform.LookAt(new Vector3(input.mouse_x, transform.position.y, input.mouse_z));
+
     Runner.Spawn(punchHitbox,
       transform.position, transform.rotation,
       GetComponent<NetworkObject>().StateAuthority, (runner, o) =>
@@ -15,7 +16,5 @@ public class FieryFist : Ability
         o.GetComponent<PushHitbox>().Init(Object.InputAuthority);
         o.transform.SetParent(transform);
       });
-
-    GetComponent<Wizard>().stun_remaining = TickTimer.CreateFromSeconds(Runner, 0.8f);
   }
 }
